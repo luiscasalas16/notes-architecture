@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NCA.Common.ApiRest\NCA.Common.ApiRest.csproj" />
+    <ProjectReference Include="..\NCA.Production.Application\NCA.Production.Application.csproj" />
+    <ProjectReference Include="..\NCA.Common.Infrastructure.Log\NCA.Common.Infrastructure.Log.csproj" />
+    <ProjectReference Include="..\NCA.Production.Infrastructure\NCA.Production.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

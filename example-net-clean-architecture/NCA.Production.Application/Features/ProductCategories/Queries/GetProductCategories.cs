@@ -1,0 +1,43 @@
+﻿using AutoMapper;
+using NCA.Common.Application.Abstractions;
+using NCA.Common.Application.Infrastructure.Log;
+using NCA.Common.Application.Maps;
+using NCA.Common.Application.Results;
+using NCA.Production.Domain.Contracts.Repositories;
+using NCA.Production.Domain.Models;
+
+namespace NCA.Production.Application.Features.ProductCategories.Queries
+{
+    public class GetProductCategories
+    {
+        public class Query : QueryBase<Result<List<Response>>>
+        {
+            public string? FilterName { get; set; }
+
+            public Query(string? filterName)
+            {
+                FilterName = filterName;
+            }
+        }
+
+        public class QueryHandler : QueryHandlerRepositoryBase<Query, Result<List<Response>>, IProductCategoryRepository>
+        {
+            public QueryHandler(IProductCategoryRepository repository, IMapper mapper, ILogger logger)
+                : base(repository, mapper, logger) { }
+
+            public override async Task<Result<List<Response>>> Handle(Query request)
+            {
+                var entities = await Repository.GetAll();
+
+                return Result<List<Response>>.Success(Mapper.Map<List<Response>>(entities));
+            }
+        }
+
+        public class Response : IMapFrom<ProductCategory>
+        {
+            public int ProductCategoryId { get; set; }
+
+            public string Name { get; set; } = null!;
+        }
+    }
+}
