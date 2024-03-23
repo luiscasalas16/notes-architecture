@@ -3,11 +3,11 @@ using System.Net.Http.Json;
 using FluentAssertions;
 using NCA.Production.Application.Features.ProductCategories.Queries;
 
-namespace NCA.Production.Tests.ApiRest.Functional.ApiRestMin
+namespace NCA.Production.Tests.ApiRest.Functional.ApiRestCon
 {
-    public class ApiRestMinTests : ApiRestMinTestsBase
+    public class ApiRestConTests : ApiRestConTestsBase
     {
-        public ApiRestMinTests(ApiRestMinTestsFixtureImplementation factory)
+        public ApiRestConTests(ApiRestConTestsFixtureImplementation factory)
             : base(factory) { }
 
         [Fact]
