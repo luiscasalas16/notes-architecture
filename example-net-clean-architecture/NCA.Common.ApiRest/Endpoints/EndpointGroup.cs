@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace NCA.Common.ApiRest.Endpoints
+namespace NCA.Common.Api.Endpoints
 {
     public abstract class EndpointGroup
     {

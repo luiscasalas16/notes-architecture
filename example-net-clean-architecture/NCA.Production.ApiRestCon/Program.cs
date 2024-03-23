@@ -1,4 +1,4 @@
-using NCA.Common.ApiRest.Filters;
+using NCA.Common.Api.Exceptions;
 using NCA.Common.Infrastructure.Log;
 using NCA.Production.Application;
 using NCA.Production.Infrastructure;
@@ -29,7 +29,7 @@ namespace NCA.Production.ApiRestCon
 
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
-            builder.Services.AddInfrastructureCommonLogServices();
+            builder.Services.AddInfrastructureCommonLoggers();
 
             var app = builder.Build();
 

@@ -13,13 +13,16 @@ namespace NCA.Common.Application.Results
 
         [JsonPropertyName("detail")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? Detail { get; }
+        public string? Detail { get; set; }
 
-        public ResultServerError(Exception exception)
+        public ResultServerError(Exception? exception)
         {
-            Title = "Internal Server Error";
+            Title = Result.ServerErrorTitle;
             Status = Result.ServerErrorCode;
-            Detail = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ? exception.ToString() : null;
+            Detail = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ? exception?.ToString() : null;
         }
+
+        public ResultServerError()
+            : this(null) { }
     }
 }

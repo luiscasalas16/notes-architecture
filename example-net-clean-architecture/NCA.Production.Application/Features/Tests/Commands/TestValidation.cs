@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
-using NCA.Common.Application.Validators;
-using NCA.Common.Domain.Models;
+﻿using NCA.Common.Application.Validators;
 
 namespace NCA.Production.Application.Features.Tests.Commands
 {

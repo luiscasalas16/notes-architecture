@@ -1,12 +1,4 @@
-﻿using AutoMapper;
-using NCA.Common.Application.Abstractions;
-using NCA.Common.Application.Infrastructure.Log;
-using NCA.Common.Application.Maps;
-using NCA.Common.Application.Results;
-using NCA.Production.Domain.Contracts.Repositories;
-using NCA.Production.Domain.Models;
-
-namespace NCA.Production.Application.Features.ProductCategories.Queries
+﻿namespace NCA.Production.Application.Features.ProductCategories.Queries
 {
     public class GetProductCategories
     {

@@ -9,13 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Production.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Production.Application", "NCA.Production.Application\NCA.Production.Application.csproj", "{C1217109-CE82-4729-A759-D220ACE2C5E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{D38EF5F2-E556-43CF-B723-A8A4EB40311D}"
-	ProjectSection(SolutionItems) = preProject
-		.csharpierrc = .csharpierrc
-		.editorconfig = .editorconfig
-		README.md = README.md
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Domain", "NCA.Common.Domain\NCA.Common.Domain.csproj", "{146FEDF1-0743-45B1-9DFA-AF7DBBA8AC4B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Application", "NCA.Common.Application\NCA.Common.Application.csproj", "{FAE9F6D8-5633-41C7-999D-308C67BAED9A}"

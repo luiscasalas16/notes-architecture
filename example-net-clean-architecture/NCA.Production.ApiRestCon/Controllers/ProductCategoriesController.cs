@@ -1,6 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using NCA.Common.Application.Results;
+﻿using Microsoft.AspNetCore.Mvc;
 using NCA.Production.Application.Features.ProductCategories.Commands;
 using NCA.Production.Application.Features.ProductCategories.Queries;
 

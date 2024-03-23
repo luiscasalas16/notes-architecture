@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using NCA.Common.Application.Abstractions;
-using NCA.Common.Application.Infrastructure.Log;
-using NCA.Common.Application.Results;
-using NCA.Production.Domain.Contracts.Repositories;
-using NCA.Production.Domain.Errors;
-
-namespace NCA.Production.Application.Features.ProductCategories.Commands
+﻿namespace NCA.Production.Application.Features.ProductCategories.Commands
 {
     public class DeleteProductCategory
     {

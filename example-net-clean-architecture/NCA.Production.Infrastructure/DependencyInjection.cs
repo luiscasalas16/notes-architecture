@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NCA.Production.Application.Services;
-using NCA.Production.Domain.Contracts.Repositories;
 using NCA.Production.Infrastructure.Repositories;
 using NCA.Production.Infrastructure.Services;
 

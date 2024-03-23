@@ -1,8 +1,5 @@
 ﻿using System.Reflection;
-using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using NCA.Common.Application.Behaviours;
 
 namespace NCA.Production.Application
 {

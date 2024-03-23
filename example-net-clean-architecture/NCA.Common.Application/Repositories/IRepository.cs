@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using NCA.Common.Domain.Models;
 
-namespace NCA.Common.Domain
+namespace NCA.Common.Application.Repositories
 {
     public interface IRepository { }
 
@@ -22,6 +22,8 @@ namespace NCA.Common.Domain
         );
 
         Task<T?> GetById(int id);
+
+        Task<T?> GetBy(Expression<Func<T, bool>> predicate);
 
         Task<T> Add(T entity);
 

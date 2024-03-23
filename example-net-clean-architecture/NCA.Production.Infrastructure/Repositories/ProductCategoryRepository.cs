@@ -1,5 +1,5 @@
 ﻿using NCA.Common.Infrastructure.Repositories;
-using NCA.Production.Domain.Contracts.Repositories;
+using NCA.Production.Application;
 using NCA.Production.Domain.Models;
 
 namespace NCA.Production.Infrastructure.Repositories

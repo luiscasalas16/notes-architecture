@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using NCA.Common.Application.Infrastructure.Log;
-using NCA.Common.Domain;
-using NCA.Common.Domain.Models;
+using NCA.Common.Application.Repositories;
 
 namespace NCA.Common.Application.Abstractions
 {

@@ -1,14 +1,4 @@
-﻿using AutoMapper;
-using FluentValidation;
-using NCA.Common.Application.Abstractions;
-using NCA.Common.Application.Infrastructure.Log;
-using NCA.Common.Application.Maps;
-using NCA.Common.Application.Results;
-using NCA.Common.Application.Validators;
-using NCA.Common.Domain.Models;
-using NCA.Production.Domain.Contracts.Repositories;
-using NCA.Production.Domain.Errors;
-using NCA.Production.Domain.Models;
+﻿using NCA.Common.Application.Validators;
 
 namespace NCA.Production.Application.Features.ProductCategories.Commands
 {

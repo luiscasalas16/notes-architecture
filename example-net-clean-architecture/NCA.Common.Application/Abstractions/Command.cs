@@ -2,7 +2,7 @@
 using FluentValidation;
 using MediatR;
 using NCA.Common.Application.Infrastructure.Log;
-using NCA.Common.Domain;
+using NCA.Common.Application.Repositories;
 
 namespace NCA.Common.Application.Abstractions
 {

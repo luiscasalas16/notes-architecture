@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace NCA.Common.Domain.Models
+﻿namespace NCA.Common.Domain.Models
 {
     public class Error
     {
@@ -16,14 +14,17 @@ namespace NCA.Common.Domain.Models
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Message { get; set; }
 
-        public Error(string code, string message)
-            : this(null!, code, message) { }
-
         public Error(string property, string code, string message)
         {
             Property = property;
-            Message = message;
             Code = code;
+            Message = message;
         }
+
+        public Error(string code, string message)
+            : this(null!, code, message) { }
+
+        public Error()
+            : this(null!, null!, null!) { }
     }
 }

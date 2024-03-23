@@ -1,6 +1,4 @@
-﻿using NCA.Common.ApiRest.Endpoints;
-using NCA.Common.Application.Results;
-using NCA.Common.Domain.Models;
+﻿using NCA.Common.Domain.Models;
 
 namespace NCA.Production.ApiRestMin.Endpoints
 {

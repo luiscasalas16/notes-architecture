@@ -11,12 +11,12 @@ namespace NCA.Common.Application.Results
         public const int SuccessCode = 200;
         public const int ClientErrorCode = 400;
         public const int ServerErrorCode = 500;
+        public const string ClientErrorTitle = "Bad Request Error";
+        public const string ServerErrorTitle = "Internal Server Error";
 
         public int Code { get; }
 
         public List<Error> Errors { get; }
-
-        public int? StatusCode => throw new NotImplementedException();
 
         protected internal Result(int code)
             : this(code, []) { }

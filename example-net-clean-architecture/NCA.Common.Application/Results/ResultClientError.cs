@@ -1,5 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using NCA.Common.Domain.Models;
 
 namespace NCA.Common.Application.Results
@@ -15,13 +14,16 @@ namespace NCA.Common.Application.Results
 
         [JsonPropertyName("errors")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public List<Error>? Errors { get; }
+        public List<Error>? Errors { get; set; }
 
         public ResultClientError(List<Error>? errors)
         {
-            Title = "Bad Request Error";
+            Title = Result.ClientErrorTitle;
             Status = Result.ClientErrorCode;
             Errors = errors;
         }
+
+        public ResultClientError()
+            : this([]) { }
     }
 }

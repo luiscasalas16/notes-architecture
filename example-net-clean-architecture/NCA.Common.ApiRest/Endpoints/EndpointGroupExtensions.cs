@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
 
-namespace NCA.Common.ApiRest.Endpoints
+namespace NCA.Common.Api.Endpoints
 {
     public static class EndpointGroupExtensions
     {

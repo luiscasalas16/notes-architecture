@@ -10,9 +10,4 @@
     <ProjectReference Include="..\NCA.Common.Domain\NCA.Common.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\" />
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
 </Project>

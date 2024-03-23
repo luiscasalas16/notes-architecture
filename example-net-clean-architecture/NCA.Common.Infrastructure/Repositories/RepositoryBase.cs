@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using NCA.Common.Domain;
+using NCA.Common.Application.Repositories;
 using NCA.Common.Domain.Models;
 
 namespace NCA.Common.Infrastructure.Repositories
@@ -72,9 +72,14 @@ namespace NCA.Common.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public virtual async Task<T?> GetById(int id)
+        public async Task<T?> GetById(int id)
         {
             return await _context.Set<T>().FindAsync(id);
+        }
+
+        public async Task<T?> GetBy(Expression<Func<T, bool>> predicate)
+        {
+            return await _context.Set<T>().SingleOrDefaultAsync(predicate);
         }
 
         public async Task<T> Add(T entity)
@@ -86,7 +91,7 @@ namespace NCA.Common.Infrastructure.Repositories
 
         public async Task<T> Update(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();
             return entity;
         }

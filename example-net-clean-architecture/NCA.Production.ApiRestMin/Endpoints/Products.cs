@@ -1,7 +1,4 @@
-﻿using MediatR;
-using NCA.Common.ApiRest.Endpoints;
-using NCA.Common.Application.Results;
-using NCA.Production.Application.Features.Products.Queries;
+﻿using NCA.Production.Application.Features.Products.Queries;
 
 namespace NCA.Production.ApiRestMin.Endpoints
 {
