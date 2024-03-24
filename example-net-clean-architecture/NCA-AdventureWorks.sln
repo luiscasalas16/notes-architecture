@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Application", "N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Infrastructure", "NCA.Common.Infrastructure\NCA.Common.Infrastructure.csproj", "{70A40703-A527-4F49-8C68-8C7426CB8BAB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Production.Tests", "NCA.Production.Tests\NCA.Production.Tests.csproj", "{1BA4DDFA-9E6D-422A-856F-B9397C98667E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.ApiRest", "NCA.Common.ApiRest\NCA.Common.ApiRest.csproj", "{258FA28C-4AF4-485F-A726-CF4533E8B27B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E180AF5F-B333-4CD2-A1AB-561E02DD715F}"
@@ -59,10 +57,6 @@ Global
 		{70A40703-A527-4F49-8C68-8C7426CB8BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70A40703-A527-4F49-8C68-8C7426CB8BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70A40703-A527-4F49-8C68-8C7426CB8BAB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BA4DDFA-9E6D-422A-856F-B9397C98667E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BA4DDFA-9E6D-422A-856F-B9397C98667E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BA4DDFA-9E6D-422A-856F-B9397C98667E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BA4DDFA-9E6D-422A-856F-B9397C98667E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{258FA28C-4AF4-485F-A726-CF4533E8B27B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{258FA28C-4AF4-485F-A726-CF4533E8B27B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{258FA28C-4AF4-485F-A726-CF4533E8B27B}.Release|Any CPU.ActiveCfg = Release|Any CPU

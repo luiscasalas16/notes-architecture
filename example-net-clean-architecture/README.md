@@ -1,331 +1,461 @@
 # example-net-clean-architecture
 
-proyectos:
-	- ApiRest
-		- tipo: Web Api
-		- referencias: Application, Infrastructure, ApiRest.Common
-	- ApiRest.Common
-		- tipo: Class Library
-		- referencias: Application.Common
-	- Application
-		- tipo: Class Library
-		- referencias: Domain, Application.Common
-		- packages:
-			Install-Package MediatR -ProjectName NCA.Production.Application
-			Install-Package FluentValidation -ProjectName NCA.Production.Application
-			Install-Package FluentValidation.DependencyInjectionExtensions -ProjectName NCA.Production.Application
-			Install-Package AutoMapper -ProjectName NCA.Production.Application
-	- Application.Common
-		- tipo: Class Library
-		- referencias: Domain.Common
-		- packages:
-			Install-Package MediatR -ProjectName NCA.Common.Application
-			Install-Package FluentValidation -ProjectName NCA.Common.Application
-	- Domain
-		- tipo: Class Library
-		- referencias: Domain.Common
-	- Domain.Common
-		- tipo: Class Library
-	- Infrastructure
-		- tipo: Class Library
-		- referencias: Application y Infrastructure.Common
-		- packages:
-			Install-Package Microsoft.EntityFrameworkCore.SqlServer  -ProjectName NCA.Production.Infrastructure
-	- Infrastructure.Common
-		- tipo: Class Library
-		- referencias: Application.Common
-		- packages:
-			Install-Package Microsoft.EntityFrameworkCore.SqlServer  -ProjectName NCA.Common.Infrastructure
+Proyecto de ejemplo de microservicios implementados utilizando clean architecture.
 
-mejoras:
-	- unificaci髇 de comando, handler y validaci髇 en features.
-		- estructura original
-			- ProductCategories
-				- Commands
-					- CreateProductCategory
-						- CreateProductCategoryCommand.cs
-						- CreateProductCategoryCommandHandler.cs
-						- CreateProductCategoryCommandValidator.cs
-					- UpdateProductCategory
-						- UpdateProductCategoryCommand.cs
-						- UpdateProductCategoryCommandHandler.cs
-						- UpdateProductCategoryCommandValidator.cs
-					- DeleteProductCategory
-						- DeleteProductCategoryCommand.cs
-						- DeleteProductCategoryCommandHandler.cs
-		- estructura mejorada
-			- ProductCategories
-				- Commands
-					- CreateProductCategory.cs
-					- UpdateProductCategory.cs
-					- DeleteProductCategory.cs
-	- manejo de errores de validaci髇 por NCA.Common.Application.Behaviours.ValidationBehaviour
-	- manejo de excepciones unificado por NCA.Common.ApiRest.Filters.ApiExceptionFilterAttribute
-	- uso de apis controladores o de apis m韓imos
-	- uso de clases base para implementaci髇 de commands y queries
-		- validador
-			- implementaci髇 tradicional
-				```csharp
-				public class CommandValidator : AbstractValidator<Command>
-				```
-			- implementaci髇 con clases base
-				```csharp
-				public class CommandValidator : CommandValidatorBase<Command>
-				```
-		- commands
-			- implementaci髇 tradicional sin retorno
-				```csharp
-				public class Command : IRequest
-				public class CommandHandler : IRequestHandler<Command>
-				//
-				private readonly IProductCategoryRepository _repository;
-				private readonly IMapper _mapper;
-				private readonly ILogger _logger;
-				//
-				public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogger logger)
-				{
-					_repository = repository;
-					_mapper = mapper;
-					_logger = logger;
-				}
-				```
-			- implementaci髇 tradicional con retorno
-				```csharp
-				public class Command : IRequest<int>
-				public class CommandHandler : IRequestHandler<Command, int>
-				//
-				private readonly IProductCategoryRepository _repository;
-				private readonly IMapper _mapper;
-				private readonly ILogger _logger;
-				//
-				public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogger logger)
-				{
-					_repository = repository;
-					_mapper = mapper;
-					_logger = logger;
-				}
-				```
-			- implementaci髇 con clases base sin retorno
-				```csharp
-				public class Command : CommandBase
-				public class CommandHandler : CommandHandlerBase<Command>
-				//
-				private readonly IProductCategoryRepository _repository;
-				//
-				public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
-					: base(mapper, logger)
-				{
-					_repository = repository;
-				}
-				```
-			- implementaci髇 con clases base con retorno
-				```csharp
-				public class Command : CommandBase<int>
-				public class CommandHandler : CommandHandlerBase<Command, int>
-				//
-				private readonly IProductCategoryRepository _repository;
-				//
-				public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
-					: base(repository, mapper, logger)
-				{
-					_repository = repository;
-				}
-				```
-			- implementaci髇 con clases base y repositorio sin retorno
-				```csharp
-				public class Command : CommandBase
-				public class CommandHandler : CommandHandlerRepositoryBase<Command, IProductCategoryRepository>
-				//
-				public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
-					: base(repository, mapper, logger) 
-				{
-				}
-				```
-			- implementaci髇 con clases base y repositorio con retorno
-				```csharp
-				public class Command : CommandBase<int>
-				public class CommandHandler : CommandHandlerRepositoryBase<Command, int, IProductCategoryRepository>
-				//
-				public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
-					: base(repository, mapper, logger) 
-				{
-				}
-				```
-		- queries
-			- implementaci髇 tradicional
-				```csharp
-				public class Query : IRequest<List<Response>>
-				public class QueryHandler : IRequestHandler<Query, List<Response>>
-				//
-				private readonly IProductCategoryRepository _repository;
-				private readonly IMapper _mapper;
-				private readonly ILogService _logger;
-				//
-				public QueryHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
-				{
-					_repository = repository;
-					_mapper = mapper;
-					_logger = logger;
-				}
-				```
-			- implementaci髇 con clases base
-				```csharp
-				public class Query : QueryBase<List<Response>>
-				public class QueryHandler : QueryHandlerBase<Query, List<Response>>
-				//
-				private readonly IProductCategoryRepository _repository;
-				//
-				public QueryHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
-					: base(mapper, logger)
-				{
-					_repository = repository;
-				}
-				```
-			- implementaci髇 con clases base y repositorio
-				```csharp
-				public class Query : QueryBase<List<Response>>
-				public class QueryHandler : QueryHandlerRepositoryBase<Query, List<Response>, IProductCategoryRepository>
-				//
-				public QueryHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
-					: base(repository, mapper, logger) 
-				{
-				}
-				```
-	- uso de interfaces de mapeo de objetos
-		- implementaci髇 tradicional
-			```csharp
-			public class MapProfile : Profile
-			{
-				public MapProfile()
-				{
-					CreateMap<ProductCategory, GetProductCategories.Response>();
-					CreateMap<CreateProductCategory.Command, ProductCategory>();
-					CreateMap<UpdateProductCategory.Command, ProductCategory>();
-				}
-			}
-			```
-		- implementaci髇 con interfaces
-			```csharp
-			public class MapProfile : MapProfileBase
-			{
-				public MapProfile()
-					: base(Assembly.GetExecutingAssembly())
-				{
-					//
-				}
-			}
-			//
-			public class CreateProductCategory
-			{
-				public class Command : CommandBase<int>, IMapTo<ProductCategory>
-			//
-			public class UpdateProductCategory
-			{
-				public class Command : CommandBase, IMapTo<ProductCategory>
-			//
-			public class GetProductCategories
-			{
-				public class Response : IMapFrom<ProductCategory>
-			```
-	- manejo de resultados y errores
-		- estandarizar erorres en cliente 400 o servidor 500
-		- errores de validaci髇 estandar 400
-		```json
-		{
-		  "title": "One or more validation errors occurred.",
-		  "status": 400,
-		  "errors": {
-			"Parameter1": [
-			  "Cannot be null.",
-			  "Cannot be blank."
-			],
-			"Parameter2": [
-			  "Cannot be null.",
-			  "Cannot be blank."
-			]
-		  }
-		}
-		//
-		{
-		  "title": "Not Found",
-		  "status": 404,
-		}
-		```
-		- errores de validaci髇 de arquitectura 400
-		```json
-		{
-		  "title": "Bad Request Error",
-		  "status": 400,
-		  "errors": [
-			{
-			  "property": "Parameter1",
-			  "code": "NotNullValidator",
-			  "message": "Cannot be null."
-			},
-			{
-			  "property": "Parameter1",
-			  "code": "NotEmptyValidator",
-			  "message": "Cannot be blank."
-			},
-			{
-			  "property": "Parameter2",
-			  "code": "ParameterNotNull",
-			  "message": "Cannot be null."
-			},
-			{
-			  "property": "Parameter2",
-			  "code": "ParameterNotBlank",
-			  "message": "Cannot be blank."
-			}
-		  ]
-		}
-		//
-		{
-		  "title": "Bad Request Error",
-		  "status": 400,
-		  "errors": [
-			{
-			  "code": "ProductCategory.NotFound",
-			  "message": "The entity with the Id = '0' was not found."
-			}
-		  ]
-		}
-		```
-		- error interno estandar 500
-		```json
-		{
-		  "title": "An error occurred while processing your request.",
-		  "status": 500
-		}
-		```
-		- error interno de arquitectura 500 en desarrollo
-		```json
-		{
-		  "title": "Internal Server Error",
-		  "status": 500,
-		  "detail": "System.Exception: Test Exception\r\n   at NCA.Production.Application.Features.Tests.Commands.TestException.CommandHandler.Handle(Command request, CancellationToken cancellationToken) in C:\\Source\\example-net-clean-architecture\\NCA.Production.Application\\Features\\Tests\\Commands\\TestException.cs:line 15\r\n   at MediatR.Wrappers.RequestHandlerWrapperImpl`2.<>c__DisplayClass1_0.<Handle>g__Handler|0()\r\n   at NCA.Common.Application.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\\Source\\example-net-clean-architecture\\NCA.Common.Application\\Behaviours\\ValidationBehaviour.cs:line 32\r\n   at NCA.Production.ApiRestMin.Endpoints.TestsFeatures.TestException(ISender sender) in C:\\Source\\example-net-clean-architecture\\NCA.Production.ApiRestMin\\Endpoints\\TestsFeatures.cs:line 24\r\n   at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)\r\n   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)\r\n   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)"
-		}
-		```
-		- error interno de arquitectura 500 en producci髇
-		```json
-		{
-		  "title": "Internal Server Error",
-		  "status": 500
-		}
-		```
-		- referencias
-			- https://code-maze.com/using-the-problemdetails-class-in-asp-net-core-web-api
-			- https://www.milanjovanovic.tech/blog/global-error-handling-in-aspnetcore-8
-			- https://www.milanjovanovic.tech/blog/functional-error-handling-in-dotnet-with-the-result-pattern
-			- https://medium.com/codex/custom-error-responses-with-asp-net-core-6-web-api-and-fluentvalidation-888a3b16c80f
-			- https://github.com/ardalis/Result
-	- uso de usings globales
-referencias:
-	- https://dev.to/isaacojeda/parte-1-cqrs-y-mediatr-implementando-cqrs-en-aspnet-56oe
-	- https://github.com/dotnet-architecture/eShopOnContainers
-	- https://github.com/dotnet/eShop
-	- https://github.com/aspnetrun/run-aspnetcore-microservices
-	- https://github.com/jasontaylordev/CleanArchitecture
-	- https://github.com/ardalis/CleanArchitecture
-	- https://github.com/matt-bentley/CleanArchitecture
-	- https://github.com/ezzylearning/CleanArchitectureDemo
+- NCA es la abreviatura de Net Clean Architecture.
+- Los proyectos NAC.Common.\* son reutilizables para cualquier microservicio.
+- Los proyectos NAC.Production.\* son para el microservicio de Production.
+- Se utiliza una sola base de datos AdventureWorks c贸mo ejemplo, aunque deber铆an utilizarse una base de datos por cada microservicio.
+
+## Proyectos
+
+El ejemplo est谩 compuesto por los siguientes proyectos:
+
+- ApiRest
+  - tipo: Web Api
+  - referencias: Application, Infrastructure, ApiRest.Common
+- ApiRest.Common
+  - tipo: Class Library
+  - referencias: Application.Common
+- Application
+  - tipo: Class Library
+  - referencias: Domain, Application.Common
+  - packages:
+    Install-Package MediatR -ProjectName NCA.Production.Application
+    Install-Package FluentValidation -ProjectName NCA.Production.Application
+    Install-Package FluentValidation.DependencyInjectionExtensions -ProjectName NCA.Production.Application
+    Install-Package AutoMapper -ProjectName NCA.Production.Application
+- Application.Common
+  - tipo: Class Library
+  - referencias: Domain.Common
+  - packages:
+    Install-Package MediatR -ProjectName NCA.Common.Application
+    Install-Package FluentValidation -ProjectName NCA.Common.Application
+- Domain
+  - tipo: Class Library
+  - referencias: Domain.Common
+- Domain.Common
+  - tipo: Class Library
+- Infrastructure
+  - tipo: Class Library
+  - referencias: Application y Infrastructure.Common
+  - packages:
+    Install-Package Microsoft.EntityFrameworkCore.SqlServer -ProjectName NCA.Production.Infrastructure
+- Infrastructure.Common
+  - tipo: Class Library
+  - referencias: Application.Common
+  - packages:
+    Install-Package Microsoft.EntityFrameworkCore.SqlServer -ProjectName NCA.Common.Infrastructure
+
+## Arquitectura
+
+Los siguientes puntos de arquitectura fueron incluidos en la arquitectura:
+
+- Implementaci贸n de validaciones utilizando [FluentValidation](https://docs.fluentvalidation.net/).
+  - <https://code-maze.com/fluentvalidation-in-aspnet>
+- Implementaci贸n patrones Command Query Responsibility Segregation (CQRS) y Mediator utilizando [MediatR](https://github.com/jbogard/MediatR).
+  - <https://code-maze.com/cqrs-mediatr-in-aspnet-core>
+- Manejo de errores de validaciones de FluentValidation en MediatR por NCA.Common.Application.Behaviours.ValidationBehaviour.
+  - <https://code-maze.com/cqrs-mediatr-fluentvalidation>
+  - <https://www.milanjovanovic.tech/blog/cqrs-validation-with-mediatr-pipeline-and-fluentvalidation>
+- Manejo de excepciones unificado por NCA.Common.ApiRest.Filters.ApiExceptionFilterAttribute.
+  - <https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling>
+  - <https://www.milanjovanovic.tech/blog/global-error-handling-in-aspnetcore-8>
+- Soporte de implementaci贸n de APIs utilizando ASP.NET Core Minimal APIs. Son recomendaci贸n para la implementaci贸n de microservicios.
+  - <https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api>
+  - <https://code-maze.com/dotnet-minimal-api>
+- Soporte de implementaci贸n de APIs utilizando ASP.NET Core Controller APIs. No son la recomendaci贸n para la implementaci贸n de microservicios, pero hist贸ricamente se utilizan por lo que se habilita el soporte.
+  - <https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api>
+- Registro unificado de Minimal APIs.
+  - <https://code-maze.com/aspnetcore-automatic-registration-of-minimal-api-endpoints>
+- Unificaci贸n de comando, handler y validaci贸n en un mismo archivo para los commands y queries de CQRS.
+
+  - estructura original
+
+  ```text
+  + ProductCategories
+    + Commands
+      + CreateProductCategory
+          - CreateProductCategoryCommand.cs
+          - CreateProductCategoryCommandHandler.cs
+          - CreateProductCategoryCommandValidator.cs
+      + UpdateProductCategory
+          - UpdateProductCategoryCommand.cs
+          - UpdateProductCategoryCommandHandler.cs
+          - UpdateProductCategoryCommandValidator.cs
+      + DeleteProductCategory
+          - DeleteProductCategoryCommand.cs
+          - DeleteProductCategoryCommandHandler.cs
+  ```
+
+  - estructura mejorada
+
+  ```text
+  + ProductCategories
+      + Commands
+          - CreateProductCategory.cs
+          - UpdateProductCategory.cs
+          - DeleteProductCategory.cs
+  ```
+
+- uso de clases base para implementaci贸n de commands y queries de CQRS.
+
+  - validador
+
+    - implementaci贸n tradicional
+
+      ```csharp
+      public class CommandValidator : AbstractValidator<Command> {}
+      ```
+
+    - implementaci贸n con clases base
+
+      ```csharp
+      public class CommandValidator : CommandValidatorBase<Command> {}
+      ```
+
+  - commands
+
+    - implementaci贸n tradicional sin retorno
+
+      ```csharp
+      public class Command : IRequest {}
+      public class CommandHandler : IRequestHandler<Command>
+      {
+        //
+        private readonly IProductCategoryRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly ILogger _logger;
+        //
+        public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogger logger)
+        {
+          _repository = repository;
+          _mapper = mapper;
+          _logger = logger;
+        }
+      }
+      ```
+
+    - implementaci贸n tradicional con retorno
+
+      ```csharp
+      public class Command : IRequest<int> {}
+      public class CommandHandler : IRequestHandler<Command, int>
+      {
+        //
+        private readonly IProductCategoryRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly ILogger _logger;
+        //
+        public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogger logger)
+        {
+          _repository = repository;
+          _mapper = mapper;
+          _logger = logger;
+        }
+      }
+      ```
+
+    - implementaci贸n con clases base sin retorno
+
+      ```csharp
+      public class Command : CommandBase {}
+      public class CommandHandler : CommandHandlerBase<Command>
+      {
+        //
+        private readonly IProductCategoryRepository _repository;
+        //
+        public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
+          : base(mapper, logger)
+        {
+          _repository = repository;
+        }
+      }
+      ```
+
+    - implementaci贸n con clases base con retorno
+
+      ```csharp
+      public class Command : CommandBase<int> {}
+      public class CommandHandler : CommandHandlerBase<Command, int>
+      {
+        //
+        private readonly IProductCategoryRepository _repository;
+        //
+        public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
+          : base(repository, mapper, logger)
+        {
+          _repository = repository;
+        }
+      }
+      ```
+
+    - implementaci贸n con clases base y repositorio defecto sin retorno
+
+      ```csharp
+      public class Command : CommandBase {}
+      public class CommandHandler : CommandHandlerRepositoryBase<Command, IProductCategoryRepository>
+      {
+        //
+        public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
+          : base(repository, mapper, logger)
+        {
+        }
+      }
+      ```
+
+    - implementaci贸n con clases base y repositorio defecto con retorno
+
+      ```csharp
+      public class Command : CommandBase<int> {}
+      public class CommandHandler : CommandHandlerRepositoryBase<Command, int, IProductCategoryRepository>
+      {
+        //
+        public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
+          : base(repository, mapper, logger)
+        {
+        }
+      }
+      ```
+
+  - queries
+
+    - implementaci贸n tradicional
+
+      ```csharp
+      public class Query : IRequest<List<Response>> {}
+      public class QueryHandler : IRequestHandler<Query, List<Response>>
+      {
+        //
+        private readonly IProductCategoryRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly ILogService _logger;
+        //
+        public QueryHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
+        {
+          _repository = repository;
+          _mapper = mapper;
+          _logger = logger;
+        }
+      }
+      ```
+
+    - implementaci贸n con clases base
+
+      ```csharp
+      public class Query : QueryBase<List<Response>> {}
+      public class QueryHandler : QueryHandlerBase<Query, List<Response>>
+      {
+        //
+        private readonly IProductCategoryRepository _repository;
+        //
+        public QueryHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
+          : base(mapper, logger)
+        {
+          _repository = repository;
+        }
+      }
+      ```
+
+    - implementaci贸n con clases base y repositorio defecto
+
+      ```csharp
+      public class Query : QueryBase<List<Response>> {}
+      public class QueryHandler : QueryHandlerRepositoryBase<Query, List<Response>, IProductCategoryRepository>
+      {
+        //
+        public QueryHandler(IProductCategoryRepository repository, IMapper mapper, ILogService logger)
+          : base(repository, mapper, logger)
+        {
+        }
+      }
+      ```
+
+  - uso de interfaces de mapeo de objetos
+
+    - implementaci贸n tradicional
+
+      ```csharp
+      public class MapProfile : Profile
+      {
+        public MapProfile()
+        {
+        CreateMap<ProductCategory, GetProductCategories.Response>();
+        CreateMap<CreateProductCategory.Command, ProductCategory>();
+        CreateMap<UpdateProductCategory.Command, ProductCategory>();
+        }
+      }
+      ```
+
+    - implementaci贸n con interfaces
+
+      ```csharp
+      public class MapProfile : MapProfileBase
+      {
+        public MapProfile()
+        : base(Assembly.GetExecutingAssembly())
+        {
+        //
+        }
+      }
+      //
+      public class CreateProductCategory
+      {
+        public class Command : CommandBase<int>, IMapTo<ProductCategory>
+      }
+      //
+      public class UpdateProductCategory
+      {
+        public class Command : CommandBase, IMapTo<ProductCategory>
+      }
+      //
+      public class GetProductCategories
+      {
+        public class Response : IMapFrom<ProductCategory>
+      }
+      ```
+
+  - Manejo estandarizado de errores de validaci贸n y servidor.
+
+    - Errores de validaci贸n generados por un error en los datos enviados por el cliente, se retornan de forma est谩ndar con un c贸digo de resultado 400
+    - Errores de servidor generados por una excepci贸n no administrada del lado del servidor, se retornan de forma est谩ndar con un c贸digo de resultado 500.
+    - <https://code-maze.com/using-the-problemdetails-class-in-asp-net-core-web-api>
+    - errores de validaci贸n com煤nmente utilizados
+
+      ```json
+          //validaciones FluentValidation
+          {
+            "title": "One or more validation errors occurred.",
+            "status": 400,
+            "errors": {
+            "Parameter1": [
+              "Cannot be null.",
+              "Cannot be blank."
+            ],
+            "Parameter2": [
+              "Cannot be null.",
+              "Cannot be blank."
+            ]
+            }
+          }
+          //validaciones
+          {
+            "title": "Not Found",
+            "status": 404,
+          }
+      ```
+
+    - errores de validaci贸n est谩ndar en la arquitectura
+
+      ```json
+      //validaciones FluentValidation
+      {
+        "title": "Bad Request Error",
+        "status": 400,
+        "errors": [
+        {
+          "property": "Parameter1",
+          "code": "NotNullValidator",
+          "message": "Cannot be null."
+        },
+        {
+          "property": "Parameter1",
+          "code": "NotEmptyValidator",
+          "message": "Cannot be blank."
+        },
+        {
+          "property": "Parameter2",
+          "code": "ParameterNotNull",
+          "message": "Cannot be null."
+        },
+        {
+          "property": "Parameter2",
+          "code": "ParameterNotBlank",
+          "message": "Cannot be blank."
+        }
+        ]
+      }
+      //validaciones
+      {
+        "title": "Bad Request Error",
+        "status": 400,
+        "errors": [
+        {
+          "code": "ProductCategory.NotFound",
+          "message": "The entity with the Id = '0' was not found."
+        }
+        ]
+      }
+      ```
+
+    - error interno com煤nmente utilizado
+
+      ```json
+      {
+        "title": "An error occurred while processing your request.",
+        "status": 500
+      }
+      ```
+
+    - error interno est谩ndar en la arquitectura para desarrollo
+
+      ```json
+      {
+        "title": "Internal Server Error",
+        "status": 500,
+        "detail": "System.Exception: Test Exception
+           at NCA.Production.Application.Features.Tests.Commands.TestException.CommandHandler.Handle(Command request, CancellationToken cancellationToken) in C:\\Source\\example-net-clean-architecture\\NCA.Production.Application\\Features\\Tests\\Commands\\TestException.cs:line 15
+           at MediatR.Wrappers.RequestHandlerWrapperImpl`2.<>c__DisplayClass1_0.<Handle>g__Handler|0()
+           at NCA.Common.Application.Behaviours.ValidationBehaviour`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\\Source\\example-net-clean-architecture\\NCA.Common.Application\\Behaviours\\ValidationBehaviour.cs:line 32
+           at NCA.Production.ApiRestMin.Endpoints.TestsFeatures.TestException(ISender sender) in C:\\Source\\example-net-clean-architecture\\NCA.Production.ApiRestMin\\Endpoints\\TestsFeatures.cs:line 24
+           at Microsoft.AspNetCore.Http.RequestDelegateFactory.ExecuteTaskResult[T](Task`1 task, HttpContext httpContext)
+           at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+           at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)"
+      }
+      ```
+
+    - error interno est谩ndar en la arquitectura para producci贸n
+
+    ```json
+    {
+      "title": "Internal Server Error",
+      "status": 500
+    }
+    ```
+
+  - Implementaci贸n de patr贸n resultado para el retorno de commands y queries de CQRS.
+
+    - <https://code-maze.com/using-the-problemdetails-class-in-asp-net-core-web-api>
+    - <https://www.milanjovanovic.tech/blog/functional-error-handling-in-dotnet-with-the-result-pattern>
+    - <https://github.com/ardalis/Result>
+
+  - Implementaci贸n de usings globales.
+
+## Referencias
+
+- Tutoriales
+  - <https://dev.to/isaacojeda/parte-1-cqrs-y-mediatr-implementando-cqrs-en-aspnet-56oe>
+  - <https://levelup.gitconnected.com/implementing-clean-architecture-and-ddd-project-from-scratch-to-a-working-app-step-by-step-in-net-b9a934b63aab#6589>
+- Cursos
+  - <https://www.udemy.com/course/aspnet-clean-architecture>
+- Microsoft
+  - <https://github.com/dotnet-architecture/eShopOnContainers>
+  - <https://github.com/dotnet/eShop>
+- Repositorios
+  - Ranking \*\*\*
+    - <https://github.com/aspnetrun/run-aspnetcore-microservices>
+    - <https://github.com/jasontaylordev/CleanArchitecture>
+    - <https://github.com/ardalis/CleanArchitecture>
+  - Ranking \*\*
+    - <https://github.com/ezzylearning/CleanArchitectureDemo>
+    - <https://github.com/phongnguyend/Practical.CleanArchitecture>
+  - Ranking\*
+    - <https://github.com/matt-bentley/CleanArchitecture>
+    - <https://github.com/saadjaved120/CleanArchitecture_CQRS_Pub-Sub>
+    - <https://github.com/sashamarfuttech/super-note-api>
+  - TODO
+    - <https://github.com/phongnguyend/Practical.CleanArchitecture>
+    - <https://github.com/kalintsenkov/BookStore/tree/main>
+    - <https://github.com/DijanaPenic/DDD-VShop/tree/main>
+    - <https://github.com/fullstackhero/dotnet-webapi-starter-kit/tree/master>
+    - <https://www.youtube.com/watch?v=5OtUm1BLmG0>
