@@ -64,8 +64,10 @@ Los siguientes puntos de arquitectura fueron incluidos en la arquitectura:
 - Soporte de implementación de APIs utilizando ASP.NET Core Minimal APIs. Son recomendación para la implementación de microservicios.
   - <https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api>
   - <https://code-maze.com/dotnet-minimal-api>
+  - <https://blog.jetbrains.com/dotnet/2023/04/25/introduction-to-asp-net-core-minimal-apis/>
 - Soporte de implementación de APIs utilizando ASP.NET Core Controller APIs. No son la recomendación para la implementación de microservicios, pero históricamente se utilizan por lo que se habilita el soporte.
   - <https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api>
+  - <https://www.yogihosting.com/aspnet-core-api-controllers/>
 - Registro unificado de Minimal APIs.
   - <https://code-maze.com/aspnetcore-automatic-registration-of-minimal-api-endpoints>
 - Unificación de comando, handler y validación en un mismo archivo para los commands y queries de CQRS.
@@ -458,4 +460,5 @@ Los siguientes puntos de arquitectura fueron incluidos en la arquitectura:
     - <https://github.com/kalintsenkov/BookStore/tree/main>
     - <https://github.com/DijanaPenic/DDD-VShop/tree/main>
     - <https://github.com/fullstackhero/dotnet-webapi-starter-kit/tree/master>
+    - <https://github.com/mdarlea/DDD-Seedwork>
     - <https://www.youtube.com/watch?v=5OtUm1BLmG0>

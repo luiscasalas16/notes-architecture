@@ -68,6 +68,12 @@
   - <https://medium.com/aruva-io-tech/software-design-fundamentals-in-2023-essential-concepts-for-modern-software-developers-part-ii-b3d3af942088>
   - <https://medium.com/aruva-io-tech/software-design-fundamentals-in-2023-essential-concepts-for-modern-software-developers-part-iii-87a342ac9a0a>
 
+- Patrones
+
+  - <https://medium.com/@edin.sahbaz/exploring-design-patterns-in-net-core-204511a234cf>
+  - <https://medium.com/@edin.sahbaz/comprehensive-guide-to-solid-principles-in-c-54d79e19b7d7>
+  - <https://medium.com/@techworldwithmilan/how-to-select-a-design-pattern-567181b90e8c>
+
 - Message Queues vs Event Bus vs Message Brokers
   - Message Queues.
     - It is designed to hold messages until a consumer service can process them. Use of point-to-point or producer-consumer communication model. One-to-one. The senders deliver the message and wait for acknowledgment.
