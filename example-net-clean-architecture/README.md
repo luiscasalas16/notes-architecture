@@ -86,6 +86,9 @@ Los siguientes puntos de arquitectura fueron incluidos en la arquitectura:
   - <https://code-maze.com/using-httpclientfactory-in-asp-net-core-applications>
 - Uso de inyección de dependencias.
   - <https://code-maze.com/dotnet-using-constructor-injection>
+- Uso de health checks.
+  - <https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks>
+  - <https://code-maze.com/health-checks-aspnetcore/>
 
 ## Referencias
 
