@@ -24,5 +24,21 @@ namespace NCA.Common.Application.Results
 
         public ResultServerError()
             : this(null) { }
+
+        public string DetailText
+        {
+            get
+            {
+                if (Detail != null)
+                    return Detail;
+                else
+                {
+                    if (Title != null)
+                        return Title;
+                    else
+                        return string.Empty;
+                }
+            }
+        }
     }
 }

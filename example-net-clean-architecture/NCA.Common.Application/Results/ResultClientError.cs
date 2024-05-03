@@ -25,5 +25,7 @@ namespace NCA.Common.Application.Results
 
         public ResultClientError()
             : this([]) { }
+
+        public string ErrorsText => Error.ConvertToString(Errors);
     }
 }

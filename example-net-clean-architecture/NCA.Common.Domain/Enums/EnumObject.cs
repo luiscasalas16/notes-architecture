@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace NCA.Common.Domain.Enums
 {
@@ -45,7 +44,7 @@ namespace NCA.Common.Domain.Enums
             var dictionary = new Dictionary<TValue, TEnum>();
             foreach (var item in _enumOptions.Value)
             {
-                if (item._value != null && !dictionary.ContainsKey(item._value))
+                if (!object.Equals(item._value, default(TValue)) && !dictionary.ContainsKey(item._value))
                     dictionary.Add(item._value, item);
             }
             return dictionary;
@@ -63,6 +62,12 @@ namespace NCA.Common.Domain.Enums
         /// <value>A <see cref="IReadOnlyCollection{TEnum}"/> containing all the instances of <see cref="EnumObject{TEnum, TValue}"/>.</value>
         /// <remarks>Retrieves all the instances of <see cref="EnumObject{TEnum, TValue}"/> referenced by public static read-only fields in the current class or its bases.</remarks>
         public static IReadOnlyCollection<TEnum> List => _fromName.Value.Values.ToList().AsReadOnly();
+
+        public static IReadOnlyCollection<string> ListNames => _enumOptions.Value.Select(t => t.Name).ToList().AsReadOnly();
+        public static string[] ArrayNames => [.. ListNames];
+
+        public static IReadOnlyCollection<TValue> ListValues => _enumOptions.Value.Select(t => t.Value).ToList().AsReadOnly();
+        public static TValue[] ArrayValues => [.. ListValues];
 
         private readonly string _name;
         private readonly TValue _value;
@@ -119,9 +124,8 @@ namespace NCA.Common.Domain.Enums
             TEnum FromName(Dictionary<string, TEnum> dictionary)
             {
                 if (!dictionary.TryGetValue(name, out var result))
-                {
                     throw EnumObjectHelper.NameNotFoundException<TEnum, TValue>(name);
-                }
+                
                 return result;
             }
         }
@@ -182,15 +186,11 @@ namespace NCA.Common.Domain.Enums
         /// <seealso cref="EnumObject{TEnum, TValue}.TryFromValue(TValue, out TEnum)"/>
         public static TEnum? FromValue(TValue value)
         {
-            if (value == null)
+            if (object.Equals(value, default(TValue)))
                 throw EnumObjectHelper.ArgumentNullException(nameof(value));
 
-            TEnum? result;
-
-            if (!_fromValue.Value.TryGetValue(value, out result))
-            {
+            if (!_fromValue.Value.TryGetValue(value, out TEnum? result))
                 throw EnumObjectHelper.ValueNotFoundException<TEnum, TValue>(value);
-            }
 
             return result;
         }
@@ -208,13 +208,12 @@ namespace NCA.Common.Domain.Enums
         /// <seealso cref="EnumObject{TEnum, TValue}.TryFromValue(TValue, out TEnum)"/>
         public static TEnum? FromValue(TValue value, TEnum defaultValue)
         {
-            if (value == null)
+            if (object.Equals(value, default(TValue)))
                 throw EnumObjectHelper.ArgumentNullException(nameof(value));
 
             if (!_fromValue.Value.TryGetValue(value, out var result))
-            {
                 return defaultValue;
-            }
+            
             return result;
         }
 
@@ -232,7 +231,7 @@ namespace NCA.Common.Domain.Enums
         /// <seealso cref="EnumObject{TEnum, TValue}.FromValue(TValue, TEnum)"/>
         public static bool TryFromValue(TValue value, out TEnum? result)
         {
-            if (value == null)
+            if (object.Equals(value, default(TValue)))
             {
                 result = default;
                 return false;

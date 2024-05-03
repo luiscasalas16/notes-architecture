@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using NCA.Common.Application.Infrastructure.Log;
+﻿using NCA.Common.Application.Infrastructure.Log;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace NCA.Common.Infrastructure.Log
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructureCommonLoggers(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructureCommonLogServices(this IServiceCollection services)
         {
             services.AddScoped<ILogger, Logger>();
 

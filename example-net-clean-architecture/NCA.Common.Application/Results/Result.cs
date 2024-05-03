@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
+using NCA.Common.Domain.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Metadata;
-using NCA.Common.Domain.Models;
 
 namespace NCA.Common.Application.Results
 {
@@ -15,6 +15,10 @@ namespace NCA.Common.Application.Results
         public const string ServerErrorTitle = "Internal Server Error";
 
         public int Code { get; }
+
+        public bool IsSuccess => Code == SuccessCode;
+        public bool IsClientError => Code == ClientErrorCode;
+        public bool IsServerError => Code == ServerErrorCode;
 
         public List<Error> Errors { get; }
 
@@ -29,7 +33,11 @@ namespace NCA.Common.Application.Results
 
         public static Result Success() => new(SuccessCode);
 
+        public static Result<TValue> Success<TValue>(TValue data) => new(SuccessCode, data);
+
         public static Task<Result> SuccessAsync() => Task.FromResult(Success());
+
+        public static Task<Result<TValue>> SuccessAsync<TValue>(TValue data) => Task.FromResult(Success(data));
 
         public static Result Failure(Error error) => new(ClientErrorCode, [error]);
 
@@ -46,6 +54,11 @@ namespace NCA.Common.Application.Results
         public static Task<Result> FailureAsync(List<Error> error) => Task.FromResult(Failure(error));
 
         public static Task<Result<TValue>> FailureAsync<TValue>(List<Error> error) => Task.FromResult(Failure<TValue>(error));
+
+        public static Result<TDestination> Convert<TSource, TDestination>(Result<TSource> result)
+        {
+            return new Result<TDestination>(result.Code, result.Errors);
+        }
 
         #region IResult
 
@@ -98,10 +111,6 @@ namespace NCA.Common.Application.Results
             Value = value;
         }
 
-        public static Result<TValue> Success(TValue data) => new(SuccessCode, data);
-
-        public static Task<Result<TValue>> SuccessAsync(TValue data) => Task.FromResult(Success(data));
-
         #region IResult
 
         object? IValueHttpResult.Value => Value;
@@ -135,7 +144,7 @@ namespace NCA.Common.Application.Results
             ArgumentNullException.ThrowIfNull(method);
             ArgumentNullException.ThrowIfNull(builder);
 
-            builder.Metadata.Add(new ProducesResponseTypeMetadata(StatusCodes.Status200OK, typeof(TValue), new[] { "application/json" }));
+            builder.Metadata.Add(new ProducesResponseTypeMetadata(StatusCodes.Status200OK, typeof(TValue), ["application/json"]));
         }
 
         #endregion

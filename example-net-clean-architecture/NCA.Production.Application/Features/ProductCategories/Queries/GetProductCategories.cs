@@ -19,7 +19,7 @@
 
             public override async Task<Result<List<Response>>> Handle(Query request)
             {
-                var entities = await Repository.GetAll();
+                var entities = await Repository.Get();
 
                 return Result<List<Response>>.Success(Mapper.Map<List<Response>>(entities));
             }

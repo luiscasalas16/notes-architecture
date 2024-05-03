@@ -1,6 +1,4 @@
-﻿using NCA.Common.Application.Validators;
-
-namespace NCA.Production.Application.Features.Tests.Commands
+﻿namespace NCA.Production.Application.Features.Tests.Commands
 {
     public class TestValidation
     {

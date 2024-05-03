@@ -1,6 +1,4 @@
-﻿using NCA.Common.Application.Validators;
-
-namespace NCA.Production.Application.Features.ProductCategories.Commands
+﻿namespace NCA.Production.Application.Features.ProductCategories.Commands
 {
     public class CreateProductCategory
     {

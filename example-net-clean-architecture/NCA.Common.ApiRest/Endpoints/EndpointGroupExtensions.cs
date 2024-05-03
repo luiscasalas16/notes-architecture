@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -27,6 +28,11 @@ namespace NCA.Common.Api.Endpoints
                 builder.MapGet(pattern, handler).WithName(handler.Method.Name).WithOpenApi();
 
             return builder;
+        }
+
+        public static IEndpointRouteBuilder PostPatternHandlerName(this IEndpointRouteBuilder builder, Delegate handler)
+        {
+            return Post(builder, handler.Method.Name, handler);
         }
 
         public static IEndpointRouteBuilder Post(this IEndpointRouteBuilder builder, Delegate handler)
@@ -93,7 +99,7 @@ namespace NCA.Common.Api.Endpoints
 
         public static bool IsAnonymous(this MethodInfo method)
         {
-            return method.Name.Any(new[] { '<', '>' }.Contains);
+            return method.Name.Contains('<') || method.Name.Contains('>');
         }
     }
 }

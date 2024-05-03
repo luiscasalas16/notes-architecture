@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MediatR;
 using NCA.Common.Application.Infrastructure.Log;
 using NCA.Common.Application.Repositories;
+using MediatR;
 
 namespace NCA.Common.Application.Abstractions
 {
@@ -16,19 +16,42 @@ namespace NCA.Common.Application.Abstractions
 
     public abstract class CommandHandlerBase
     {
-        protected readonly IMapper Mapper;
-        protected readonly ILogger Logger;
+        protected readonly IMapper _mapper;
+        protected IMapper Mapper
+        {
+            get
+            {
+                ArgumentNullException.ThrowIfNull(_mapper);
+                return _mapper;
+            }
+        }
+
+        protected readonly ILogger _logger;
+        protected ILogger Logger
+        {
+            get
+            {
+                ArgumentNullException.ThrowIfNull(_logger);
+                return _logger;
+            }
+        }
+
+        protected CommandHandlerBase()
+            : this(null!, null!) { }
 
         protected CommandHandlerBase(IMapper mapper, ILogger logger)
         {
-            Mapper = mapper;
-            Logger = logger;
+            _mapper = mapper;
+            _logger = logger;
         }
     }
 
     public abstract class CommandHandlerBase<TCommand> : CommandHandlerBase, IRequestHandler<TCommand, Unit>
         where TCommand : CommandBase
     {
+        protected CommandHandlerBase()
+            : this(null!, null!) { }
+
         protected CommandHandlerBase(IMapper mapper, ILogger logger)
             : base(mapper, logger) { }
 
@@ -44,6 +67,9 @@ namespace NCA.Common.Application.Abstractions
     public abstract class CommandHandlerBase<TCommand, TResponse> : CommandHandlerBase, IRequestHandler<TCommand, TResponse>
         where TCommand : CommandBase<TResponse>
     {
+        protected CommandHandlerBase()
+            : this(null!, null!) { }
+
         protected CommandHandlerBase(IMapper mapper, ILogger logger)
             : base(mapper, logger) { }
 

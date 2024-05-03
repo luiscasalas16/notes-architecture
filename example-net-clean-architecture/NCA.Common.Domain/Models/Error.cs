@@ -26,5 +26,27 @@
 
         public Error()
             : this(null!, null!, null!) { }
+
+        public override string ToString()
+        {
+            if (Property != null)
+            {
+                if (Code != null)
+                    return $"{Property} : {Code} : {Message}";
+                else
+                    return $"{Property} : {Message}";
+            }
+            else
+            {
+                if (Code != null)
+                    return $"{Code} : {Message}";
+                else
+                    return $"{Message}";
+            }
+        }
+
+        public static string ConvertToString(Error? error) => error != null ? error.ToString() : string.Empty;
+
+        public static string ConvertToString(List<Error>? errors) => errors != null ? string.Join(" - ", errors.Select(t => t.ToString())) : string.Empty;
     }
 }

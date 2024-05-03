@@ -1,6 +1,4 @@
-﻿using NCA.Common.Application.Validators;
-
-namespace NCA.Production.Application.Features.ProductCategories.Commands
+﻿namespace NCA.Production.Application.Features.ProductCategories.Commands
 {
     public class UpdateProductCategory
     {
@@ -18,13 +16,10 @@ namespace NCA.Production.Application.Features.ProductCategories.Commands
 
             public override async Task<Result> Handle(Command request)
             {
-                var entity = await Repository.GetById(request.ProductCategoryId);
+                var entity = await Repository.GetBy(request.ProductCategoryId);
 
                 if (entity == null)
                     return Result.Failure(GenericErrors.NotFound(request.ProductCategoryId));
-
-                //if (entity == null)
-                //    throw new NotFoundException(nameof(ProductCategory), request.ProductCategoryId);
 
                 Mapper.Map(request, entity, typeof(Command), typeof(ProductCategory));
 

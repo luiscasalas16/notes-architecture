@@ -5,23 +5,13 @@ namespace NCA.Common.Application.Repositories
 {
     public interface IRepository { }
 
+    // csharpier-ignore
     public interface IRepository<T> : IRepository
         where T : EntityObject
     {
-        Task<IReadOnlyList<T>> GetAll();
+        Task<IReadOnlyList<T>> Get(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? order = null, List<Expression<Func<T, object>>>? includes = null, bool tracking = false);
 
-        Task<IReadOnlyList<T>> Get(Expression<Func<T, bool>> predicate);
-
-        Task<IReadOnlyList<T>> Get(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, string? includeString = null, bool disableTracking = true);
-
-        Task<IReadOnlyList<T>> Get(
-            Expression<Func<T, bool>>? predicate = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-            List<Expression<Func<T, object>>>? includes = null,
-            bool disableTracking = true
-        );
-
-        Task<T?> GetById(int id);
+        Task<T?> GetBy(int id);
 
         Task<T?> GetBy(Expression<Func<T, bool>> predicate);
 

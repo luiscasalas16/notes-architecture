@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using MediatR;
 using NCA.Common.Application.Infrastructure.Log;
 using NCA.Common.Application.Repositories;
+using MediatR;
 
 namespace NCA.Common.Application.Abstractions
 {
@@ -14,13 +14,33 @@ namespace NCA.Common.Application.Abstractions
     public abstract class QueryHandlerBase<TQuery, TResponse> : IRequestHandler<TQuery, TResponse>
         where TQuery : QueryBase<TResponse>
     {
-        protected readonly IMapper Mapper;
-        protected readonly ILogger Logger;
+        protected readonly IMapper _mapper;
+        protected IMapper Mapper
+        {
+            get
+            {
+                ArgumentNullException.ThrowIfNull(_mapper);
+                return _mapper;
+            }
+        }
+
+        protected readonly ILogger _logger;
+        protected ILogger Logger
+        {
+            get
+            {
+                ArgumentNullException.ThrowIfNull(_logger);
+                return _logger;
+            }
+        }
+
+        protected QueryHandlerBase()
+            : this(null!, null!) { }
 
         protected QueryHandlerBase(IMapper mapper, ILogger logger)
         {
-            Mapper = mapper;
-            Logger = logger;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<TResponse> Handle(TQuery request, CancellationToken cancellationToken)

@@ -1,5 +1,6 @@
 using System.Reflection;
 using NCA.Common.Api.Exceptions;
+using NCA.Common.Api.Helpers;
 using NCA.Common.Infrastructure.Log;
 using NCA.Production.Application;
 using NCA.Production.Infrastructure;
@@ -10,45 +11,52 @@ namespace NCA.Production.ApiRestMin
     {
         public static void Main(string[] args)
         {
+            //----------
+            // Build
+            //----------
+
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            //swagger
+            builder.Services.AddCommonSwagger();
 
-            builder.Services.AddAuthorization();
+            // global exceptions handler
+            builder.Services.AddCommonExceptionHandler();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options =>
-            {
-                options.CustomSchemaIds(x => x.FullName);
-                //Fix the error System.InvalidOperationException: Can't use schemaId "$MyType" for type "$OneNamespace.MyType". The same schemaId is already used for type "$OtherNamespace.MyType".
-                options.CustomSchemaIds(s => s.FullName!.Replace("+", "."));
-            });
+            // health check
+            builder.Services.AddCommonHealthCheck();
 
-            //global exceptions handler
-            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-            builder.Services.AddProblemDetails();
-
+            // dependency injection Application
             builder.Services.AddApplicationServices();
+            // dependency injection Infrastructure
             builder.Services.AddInfrastructureServices(builder.Configuration);
-            builder.Services.AddInfrastructureCommonLoggers();
+            // dependency injection Infrastructure Common Log
+            builder.Services.AddInfrastructureCommonLogServices();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            //----------
+            // Configure
+            //----------
 
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                //swagger
+                app.UseCommonSwagger();
             }
 
-            //global exceptions handler
-            app.UseExceptionHandler();
+            // global exceptions handler
+            app.UseCommonExceptionHandler();
 
-            app.UseAuthorization();
+            // health check
+            app.UseCommonHealthCheck();
 
+            // map minimals endpoints groups
             app.MapEndpoints(Assembly.GetExecutingAssembly());
+
+            //----------
+            // Run
+            //----------
 
             app.Run();
         }

@@ -8,7 +8,14 @@ namespace NCA.Common.Infrastructure.Log
     {
         public Logger()
         {
-            Serilog.Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+            Serilog.Log.Logger = new LoggerConfiguration()
+                // set default minimum level
+                .MinimumLevel.Information()
+                // add console as target
+                .WriteTo.Console()
+                // add console as target
+                .WriteTo.Debug()
+                .CreateLogger();
         }
 
         public void LogVerbose(string message)

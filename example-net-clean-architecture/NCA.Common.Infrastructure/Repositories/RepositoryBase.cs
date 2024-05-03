@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using NCA.Common.Application.Repositories;
 using NCA.Common.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace NCA.Common.Infrastructure.Repositories
 {
@@ -15,49 +15,11 @@ namespace NCA.Common.Infrastructure.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IReadOnlyList<T>> GetAll()
-        {
-            return await _context.Set<T>().ToListAsync();
-        }
-
-        public async Task<IReadOnlyList<T>> Get(Expression<Func<T, bool>> predicate)
-        {
-            return await _context.Set<T>().Where(predicate).ToListAsync();
-        }
-
-        public async Task<IReadOnlyList<T>> Get(
-            Expression<Func<T, bool>>? predicate = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-            string? includeString = null,
-            bool disableTracking = true
-        )
+        public async Task<IReadOnlyList<T>> Get(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? order = null, List<Expression<Func<T, object>>>? includes = null, bool tracking = false)
         {
             IQueryable<T> query = _context.Set<T>();
 
-            if (disableTracking)
-                query = query.AsNoTracking();
-
-            if (!string.IsNullOrWhiteSpace(includeString))
-                query = query.Include(includeString);
-
-            if (predicate != null)
-                query = query.Where(predicate);
-
-            if (orderBy != null)
-                return await orderBy(query).ToListAsync();
-
-            return await query.ToListAsync();
-        }
-
-        public async Task<IReadOnlyList<T>> Get(
-            Expression<Func<T, bool>>? predicate = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-            List<Expression<Func<T, object>>>? includes = null,
-            bool disableTracking = true
-        )
-        {
-            IQueryable<T> query = _context.Set<T>();
-            if (disableTracking)
+            if (tracking)
                 query = query.AsNoTracking();
 
             if (includes != null)
@@ -66,13 +28,13 @@ namespace NCA.Common.Infrastructure.Repositories
             if (predicate != null)
                 query = query.Where(predicate);
 
-            if (orderBy != null)
-                return await orderBy(query).ToListAsync();
+            if (order != null)
+                return await order(query).ToListAsync();
 
             return await query.ToListAsync();
         }
 
-        public async Task<T?> GetById(int id)
+        public async Task<T?> GetBy(int id)
         {
             return await _context.Set<T>().FindAsync(id);
         }

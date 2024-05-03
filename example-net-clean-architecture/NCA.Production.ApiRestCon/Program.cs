@@ -29,7 +29,7 @@ namespace NCA.Production.ApiRestCon
 
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
-            builder.Services.AddInfrastructureCommonLoggers();
+            builder.Services.AddInfrastructureCommonLogServices();
 
             var app = builder.Build();
 
