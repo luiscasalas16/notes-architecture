@@ -89,6 +89,11 @@ Los siguientes puntos de arquitectura fueron incluidos en la arquitectura:
 - Uso de health checks.
   - <https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks>
   - <https://code-maze.com/health-checks-aspnetcore/>
+- Uso de versiones.
+  - <https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/openapi>
+  - <https://www.milanjovanovic.tech/blog/api-versioning-in-aspnetcore>
+  - <https://code-maze.com/aspnetcore-api-versioning>
+  - <https://github.com/dotnet/aspnet-api-versioning/tree/main/examples/AspNetCore/WebApi/MinimalOpenApiExample>
 
 ## Referencias
 
