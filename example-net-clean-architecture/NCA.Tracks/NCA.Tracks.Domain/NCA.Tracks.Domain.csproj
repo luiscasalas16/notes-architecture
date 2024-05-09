@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NCA.Common.Domain\NCA.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\NCA.Common\NCA.Common.Domain\NCA.Common.Domain.csproj" />
   </ItemGroup>
 
 </Project>

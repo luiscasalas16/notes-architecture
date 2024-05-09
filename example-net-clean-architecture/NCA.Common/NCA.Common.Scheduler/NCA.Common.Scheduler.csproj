@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NCA.Common.ApiRest\NCA.Common.ApiRest.csproj" />
-    <ProjectReference Include="..\NCA.Common.Application\NCA.Common.Application.csproj" />
-    <ProjectReference Include="..\NCA.Common.Infrastructure.Log\NCA.Common.Infrastructure.Log.csproj" />
+    <ProjectReference Include="..\..\NCA.Common\NCA.Common.ApiRest\NCA.Common.ApiRest.csproj" />
+    <ProjectReference Include="..\..\NCA.Common\NCA.Common.Application\NCA.Common.Application.csproj" />
+    <ProjectReference Include="..\..\NCA.Common\NCA.Common.Infrastructure.Log\NCA.Common.Infrastructure.Log.csproj" />
   </ItemGroup>
 
 </Project>

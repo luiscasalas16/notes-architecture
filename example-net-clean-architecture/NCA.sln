@@ -3,31 +3,33 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Production.Domain", "NCA.Production.Domain\NCA.Production.Domain.csproj", "{A2CEF07A-7A28-43A3-A9FB-FB6DDDEFEC96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Tracks.Domain", "NCA.Tracks\NCA.Tracks.Domain\NCA.Tracks.Domain.csproj", "{A2CEF07A-7A28-43A3-A9FB-FB6DDDEFEC96}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Production.Infrastructure", "NCA.Production.Infrastructure\NCA.Production.Infrastructure.csproj", "{F042825C-95AD-49DC-AE74-92D723EA4B53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Tracks.Infrastructure", "NCA.Tracks\NCA.Tracks.Infrastructure\NCA.Tracks.Infrastructure.csproj", "{F042825C-95AD-49DC-AE74-92D723EA4B53}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Production.Application", "NCA.Production.Application\NCA.Production.Application.csproj", "{C1217109-CE82-4729-A759-D220ACE2C5E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Tracks.Application", "NCA.Tracks\NCA.Tracks.Application\NCA.Tracks.Application.csproj", "{C1217109-CE82-4729-A759-D220ACE2C5E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Domain", "NCA.Common.Domain\NCA.Common.Domain.csproj", "{146FEDF1-0743-45B1-9DFA-AF7DBBA8AC4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Domain", "NCA.Common\NCA.Common.Domain\NCA.Common.Domain.csproj", "{146FEDF1-0743-45B1-9DFA-AF7DBBA8AC4B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Application", "NCA.Common.Application\NCA.Common.Application.csproj", "{FAE9F6D8-5633-41C7-999D-308C67BAED9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Application", "NCA.Common\NCA.Common.Application\NCA.Common.Application.csproj", "{FAE9F6D8-5633-41C7-999D-308C67BAED9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Infrastructure", "NCA.Common.Infrastructure\NCA.Common.Infrastructure.csproj", "{70A40703-A527-4F49-8C68-8C7426CB8BAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Infrastructure", "NCA.Common\NCA.Common.Infrastructure\NCA.Common.Infrastructure.csproj", "{70A40703-A527-4F49-8C68-8C7426CB8BAB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.ApiRest", "NCA.Common.ApiRest\NCA.Common.ApiRest.csproj", "{258FA28C-4AF4-485F-A726-CF4533E8B27B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.ApiRest", "NCA.Common\NCA.Common.ApiRest\NCA.Common.ApiRest.csproj", "{258FA28C-4AF4-485F-A726-CF4533E8B27B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E180AF5F-B333-4CD2-A1AB-561E02DD715F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NCA.Common", "NCA.Common", "{E180AF5F-B333-4CD2-A1AB-561E02DD715F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Production.ApiRestCon", "NCA.Production.ApiRestCon\NCA.Production.ApiRestCon.csproj", "{E11BF89A-CCBD-4B3B-BA8A-F57C97977C8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Tracks.ApiRestCon", "NCA.Tracks\NCA.Tracks.ApiRestCon\NCA.Tracks.ApiRestCon.csproj", "{E11BF89A-CCBD-4B3B-BA8A-F57C97977C8A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Production.ApiRestMin", "NCA.Production.ApiRestMin\NCA.Production.ApiRestMin.csproj", "{E5902B4C-EA20-4B97-A540-A58466669405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Tracks.ApiRestMin", "NCA.Tracks\NCA.Tracks.ApiRestMin\NCA.Tracks.ApiRestMin.csproj", "{E5902B4C-EA20-4B97-A540-A58466669405}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Infrastructure.Log", "NCA.Common.Infrastructure.Log\NCA.Common.Infrastructure.Log.csproj", "{6EC7E6CF-E499-4AD2-8EC2-91123D5D4434}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Infrastructure.Log", "NCA.Common\NCA.Common.Infrastructure.Log\NCA.Common.Infrastructure.Log.csproj", "{6EC7E6CF-E499-4AD2-8EC2-91123D5D4434}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Production.Tests.ApiRest.Functional", "NCA.Production.Tests.ApiRest.Functional\NCA.Production.Tests.ApiRest.Functional.csproj", "{78AAF8DB-8816-4D02-A041-249CFB764815}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Tracks.Tests.ApiRest.Functional", "NCA.Tracks\NCA.Tracks.Tests.ApiRest.Functional\NCA.Tracks.Tests.ApiRest.Functional.csproj", "{78AAF8DB-8816-4D02-A041-249CFB764815}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Scheduler", "NCA.Common.Scheduler\NCA.Common.Scheduler.csproj", "{6B8E9EA4-E606-412B-99AB-AFD97173AB44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Scheduler", "NCA.Common\NCA.Common.Scheduler\NCA.Common.Scheduler.csproj", "{6B8E9EA4-E606-412B-99AB-AFD97173AB44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NCA.Tracks", "NCA.Tracks", "{808B1CCB-8085-42FB-833D-60AB749852C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,11 +90,17 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{A2CEF07A-7A28-43A3-A9FB-FB6DDDEFEC96} = {808B1CCB-8085-42FB-833D-60AB749852C4}
+		{F042825C-95AD-49DC-AE74-92D723EA4B53} = {808B1CCB-8085-42FB-833D-60AB749852C4}
+		{C1217109-CE82-4729-A759-D220ACE2C5E8} = {808B1CCB-8085-42FB-833D-60AB749852C4}
 		{146FEDF1-0743-45B1-9DFA-AF7DBBA8AC4B} = {E180AF5F-B333-4CD2-A1AB-561E02DD715F}
 		{FAE9F6D8-5633-41C7-999D-308C67BAED9A} = {E180AF5F-B333-4CD2-A1AB-561E02DD715F}
 		{70A40703-A527-4F49-8C68-8C7426CB8BAB} = {E180AF5F-B333-4CD2-A1AB-561E02DD715F}
 		{258FA28C-4AF4-485F-A726-CF4533E8B27B} = {E180AF5F-B333-4CD2-A1AB-561E02DD715F}
+		{E11BF89A-CCBD-4B3B-BA8A-F57C97977C8A} = {808B1CCB-8085-42FB-833D-60AB749852C4}
+		{E5902B4C-EA20-4B97-A540-A58466669405} = {808B1CCB-8085-42FB-833D-60AB749852C4}
 		{6EC7E6CF-E499-4AD2-8EC2-91123D5D4434} = {E180AF5F-B333-4CD2-A1AB-561E02DD715F}
+		{78AAF8DB-8816-4D02-A041-249CFB764815} = {808B1CCB-8085-42FB-833D-60AB749852C4}
 		{6B8E9EA4-E606-412B-99AB-AFD97173AB44} = {E180AF5F-B333-4CD2-A1AB-561E02DD715F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

@@ -1,6 +1,0 @@
-@NCA.Production.ApiRestMin_HostAddress = http://localhost:5171
-
-GET {{NCA.Production.ApiRestMin_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

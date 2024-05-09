@@ -16,7 +16,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\NCA.Common.Application\NCA.Common.Application.csproj" />
+    <ProjectReference Include="..\..\NCA.Common\NCA.Common.Application\NCA.Common.Application.csproj" />
   </ItemGroup>
   
 </Project>

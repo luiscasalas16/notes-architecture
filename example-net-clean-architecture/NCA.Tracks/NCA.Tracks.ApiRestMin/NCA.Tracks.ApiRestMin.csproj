@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NCA.Common.ApiRest\NCA.Common.ApiRest.csproj" />
-    <ProjectReference Include="..\NCA.Production.Application\NCA.Production.Application.csproj" />
-    <ProjectReference Include="..\NCA.Common.Infrastructure.Log\NCA.Common.Infrastructure.Log.csproj" />
-    <ProjectReference Include="..\NCA.Production.Infrastructure\NCA.Production.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\NCA.Common\NCA.Common.ApiRest\NCA.Common.ApiRest.csproj" />
+    <ProjectReference Include="..\NCA.Tracks.Application\NCA.Tracks.Application.csproj" />
+    <ProjectReference Include="..\..\NCA.Common\NCA.Common.Infrastructure.Log\NCA.Common.Infrastructure.Log.csproj" />
+    <ProjectReference Include="..\NCA.Tracks.Infrastructure\NCA.Tracks.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

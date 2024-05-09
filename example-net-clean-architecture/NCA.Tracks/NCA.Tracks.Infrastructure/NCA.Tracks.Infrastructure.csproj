@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NCA.Production.Application\NCA.Production.Application.csproj" />
-    <ProjectReference Include="..\NCA.Common.Infrastructure\NCA.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\NCA.Tracks.Application\NCA.Tracks.Application.csproj" />
+    <ProjectReference Include="..\..\NCA.Common\NCA.Common.Infrastructure\NCA.Common.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
