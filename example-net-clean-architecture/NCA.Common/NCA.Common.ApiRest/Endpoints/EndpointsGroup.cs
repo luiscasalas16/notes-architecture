@@ -61,7 +61,7 @@ namespace NCA.Common.Api.Endpoints
             return Common("Delete", pattern, handler, versions);
         }
 
-        private IEndpointConventionBuilder Common(string method, string pattern, Delegate handler, int[]? versions = null)
+        private RouteHandlerBuilder Common(string method, string pattern, Delegate handler, int[]? versions = null)
         {
             RouteHandlerBuilder builder;
 
@@ -89,25 +89,25 @@ namespace NCA.Common.Api.Endpoints
 
                 builder.WithOpenApi();
 
-                BuildApiVersionSet(builder, $"/{_endpointMapper.Name}/{handler.Method.Name}", versions);
+                BuildVersions(builder, $"/{_endpointMapper.Name}/{handler.Method.Name}", versions);
             }
             else
             {
                 builder.WithOpenApi();
 
-                BuildApiVersionSet(builder, $"/{_endpointMapper.Name}/{method}", versions);
+                BuildVersions(builder, $"/{_endpointMapper.Name}/{method}", versions);
             }
 
             return builder;
         }
 
-        private void BuildApiVersionSet(RouteHandlerBuilder builder, string name, int[]? versions = null)
+        private void BuildVersions(RouteHandlerBuilder builder, string name, int[]? versions = null)
         {
             if (versions != null && versions.Length != 0)
             {
                 foreach (var version in versions)
                 {
-                    if (!_endpointMapper._versions.Contains(version))
+                    if (!_endpointMapper.Versions.Contains(version))
                         throw new ConfigurationException($"The version {version} registered to {name} does not exist.");
 
                     builder.MapToApiVersion(version);
@@ -115,7 +115,7 @@ namespace NCA.Common.Api.Endpoints
             }
             else
             {
-                foreach (var avaliableVersion in _endpointMapper._versions)
+                foreach (var avaliableVersion in _endpointMapper.Versions)
                     builder.MapToApiVersion(avaliableVersion);
             }
         }

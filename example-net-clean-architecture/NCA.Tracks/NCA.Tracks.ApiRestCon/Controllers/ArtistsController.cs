@@ -34,9 +34,9 @@ namespace NCA.Tracks.ApiRestCon.Controllers
         }
 
         [HttpDelete("{ArtistId}")]
-        public async Task<Result> DeleteArtist(int ArtistId)
+        public async Task<Result> DeleteArtist(int id)
         {
-            return await _mediator.Send(new DeleteArtist.Command(ArtistId));
+            return await _mediator.Send(new DeleteArtist.Command() { ArtistId = id });
         }
     }
 }
