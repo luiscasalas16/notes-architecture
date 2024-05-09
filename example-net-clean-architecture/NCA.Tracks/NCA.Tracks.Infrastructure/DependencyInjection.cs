@@ -1,20 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NCA.Production.Application.Services;
-using NCA.Production.Infrastructure.Repositories;
-using NCA.Production.Infrastructure.Services;
+using NCA.Tracks.Application.Services;
+using NCA.Tracks.Infrastructure.Repositories;
+using NCA.Tracks.Infrastructure.Services;
 
-namespace NCA.Production.Infrastructure
+namespace NCA.Tracks.Infrastructure
 {
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AdventureWorksDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnectionString")));
+            services.AddDbContext<ChinookContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnectionString")));
 
-            services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IArtistRepository, ArtistRepository>();
+            services.AddScoped<IAlbumRepository, AlbumRepository>();
 
             services.AddTransient<IEmailService, EmailService>();
 

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NCA.Production.Application
+namespace NCA.Tracks.Application
 {
     public static class DependencyInjection
     {

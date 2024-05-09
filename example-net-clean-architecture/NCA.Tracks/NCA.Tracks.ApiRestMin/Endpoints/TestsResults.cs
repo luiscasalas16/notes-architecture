@@ -1,6 +1,6 @@
 ﻿using NCA.Common.Domain.Models;
 
-namespace NCA.Production.ApiRestMin.Endpoints
+namespace NCA.Tracks.ApiRestMin.Endpoints
 {
     public class TestsResults : EndpointGroup
     {

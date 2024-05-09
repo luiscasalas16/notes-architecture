@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NCA.Production.Application.Features.Tests.Commands;
+using NCA.Tracks.Application.Features.Tests.Commands;
 
-namespace NCA.Production.ApiRest.Controllers
+namespace NCA.Tracks.ApiRest.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

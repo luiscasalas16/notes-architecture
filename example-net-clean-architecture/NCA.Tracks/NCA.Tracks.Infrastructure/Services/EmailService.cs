@@ -1,8 +1,8 @@
 ﻿using NCA.Common.Application.Infrastructure.Log;
-using NCA.Production.Application.Models;
-using NCA.Production.Application.Services;
+using NCA.Tracks.Application.Models;
+using NCA.Tracks.Application.Services;
 
-namespace NCA.Production.Infrastructure.Services
+namespace NCA.Tracks.Infrastructure.Services
 {
     public class EmailService : IEmailService
     {

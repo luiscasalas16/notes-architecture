@@ -1,6 +1,6 @@
-﻿namespace NCA.Production.Application.Features.Products.Queries
+﻿namespace NCA.Tracks.Application.Features.Albums.Queries
 {
-    public class GetProducts
+    public class GetAlbums
     {
         public class Query : IRequest<Result<List<Response>>>
         {
@@ -14,10 +14,10 @@
 
         public class QueryHandler : IRequestHandler<Query, Result<List<Response>>>
         {
-            private readonly IProductRepository _repository;
+            private readonly IAlbumRepository _repository;
             private readonly IMapper _mapper;
 
-            public QueryHandler(IProductRepository repository, IMapper mapper)
+            public QueryHandler(IAlbumRepository repository, IMapper mapper)
             {
                 _repository = repository;
                 _mapper = mapper;
@@ -31,13 +31,13 @@
             }
         }
 
-        public class Response : IMapFrom<Product>
+        public class Response : IMapFrom<Album>
         {
-            public int ProductId { get; set; }
+            public int AlbumId { get; set; }
 
             public string Name { get; set; } = null!;
 
-            public string ProductNumber { get; set; } = null!;
+            public string AlbumNumber { get; set; } = null!;
         }
     }
 }

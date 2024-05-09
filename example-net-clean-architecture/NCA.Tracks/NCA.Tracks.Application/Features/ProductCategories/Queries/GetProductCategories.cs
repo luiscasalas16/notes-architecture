@@ -1,6 +1,6 @@
-﻿namespace NCA.Production.Application.Features.ProductCategories.Queries
+﻿namespace NCA.Tracks.Application.Features.Artists.Queries
 {
-    public class GetProductCategories
+    public class GetArtists
     {
         public class Query : QueryBase<Result<List<Response>>>
         {
@@ -12,9 +12,9 @@
             }
         }
 
-        public class QueryHandler : QueryHandlerRepositoryBase<Query, Result<List<Response>>, IProductCategoryRepository>
+        public class QueryHandler : QueryHandlerRepositoryBase<Query, Result<List<Response>>, IArtistRepository>
         {
-            public QueryHandler(IProductCategoryRepository repository, IMapper mapper, ILogger logger)
+            public QueryHandler(IArtistRepository repository, IMapper mapper, ILogger logger)
                 : base(repository, mapper, logger) { }
 
             public override async Task<Result<List<Response>>> Handle(Query request)
@@ -25,9 +25,9 @@
             }
         }
 
-        public class Response : IMapFrom<ProductCategory>
+        public class Response : IMapFrom<Artist>
         {
-            public int ProductCategoryId { get; set; }
+            public int ArtistId { get; set; }
 
             public string Name { get; set; } = null!;
         }

@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
-using NCA.Production.Application.Features.ProductCategories.Queries;
+using NCA.Tracks.Application.Features.Artists.Queries;
 
-namespace NCA.Production.Tests.ApiRest.Functional.ApiRestMin
+namespace NCA.Tracks.Tests.ApiRest.Functional.ApiRestMin
 {
     public class ApiRestMinTests : ApiRestMinTestsBase
     {
@@ -17,13 +17,13 @@ namespace NCA.Production.Tests.ApiRest.Functional.ApiRestMin
 
             // Act
 
-            HttpResponseMessage response = await HttpClient.GetAsync("/api/v1/ProductCategories");
+            HttpResponseMessage response = await HttpClient.GetAsync("/api/v1/Artists");
 
             // Assert
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var entities = await response.Content.ReadFromJsonAsync<List<GetProductCategories.Response>>();
+            var entities = await response.Content.ReadFromJsonAsync<List<GetArtists.Response>>();
 
             entities.Should().HaveCountGreaterThanOrEqualTo(1);
         }

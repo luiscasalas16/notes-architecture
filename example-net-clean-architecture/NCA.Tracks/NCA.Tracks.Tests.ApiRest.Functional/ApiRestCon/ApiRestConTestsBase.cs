@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using NCA.Production.ApiRestCon;
+using NCA.Tracks.ApiRestCon;
 
-namespace NCA.Production.Tests.ApiRest.Functional.ApiRestCon
+namespace NCA.Tracks.Tests.ApiRest.Functional.ApiRestCon
 {
     [Collection(nameof(ApiRestConTestsFixtureDefinition))]
     public class ApiRestConTestsBase

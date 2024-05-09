@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NCA.Production.Application.Features.Products.Queries;
+using NCA.Tracks.Application.Features.Albums.Queries;
 
-namespace NCA.Production.ApiRest.Controllers
+namespace NCA.Tracks.ApiRest.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ProductsController : ControllerBase
+    public class AlbumsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public ProductsController(IMediator mediator)
+        public AlbumsController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetProducts.Response>>> GetProducts(string? filterName)
+        public async Task<ActionResult<IEnumerable<GetAlbums.Response>>> GetAlbums(string? filterName)
         {
-            return Ok(await _mediator.Send(new GetProducts.Query(filterName)));
+            return Ok(await _mediator.Send(new GetAlbums.Query(filterName)));
         }
     }
 }

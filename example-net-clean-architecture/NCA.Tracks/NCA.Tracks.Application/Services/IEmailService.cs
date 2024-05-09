@@ -1,6 +1,6 @@
-﻿using NCA.Production.Application.Models;
+﻿using NCA.Tracks.Application.Models;
 
-namespace NCA.Production.Application.Services
+namespace NCA.Tracks.Application.Services
 {
     public interface IEmailService
     {

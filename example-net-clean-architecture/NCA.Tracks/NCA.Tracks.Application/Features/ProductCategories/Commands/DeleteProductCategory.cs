@@ -1,28 +1,31 @@
-﻿namespace NCA.Production.Application.Features.ProductCategories.Commands
+﻿using NCA.Tracks.Application.Repositories;
+using NCA.Tracks.Domain.Errors;
+
+namespace NCA.Tracks.Application.Features.Artists.Commands
 {
-    public class DeleteProductCategory
+    public class DeleteArtist
     {
         public class Command : CommandBase<Result>
         {
-            public int ProductCategoryId { get; set; }
+            public int ArtistId { get; set; }
 
-            public Command(int productCategoryId)
+            public Command(int ArtistId)
             {
-                ProductCategoryId = productCategoryId;
+                ArtistId = ArtistId;
             }
         }
 
-        public class CommandHandler : CommandHandlerRepositoryBase<Command, Result, IProductCategoryRepository>
+        public class CommandHandler : CommandHandlerRepositoryBase<Command, Result, IArtistRepository>
         {
-            public CommandHandler(IProductCategoryRepository repository, IMapper mapper, ILogger logger)
+            public CommandHandler(IArtistRepository repository, IMapper mapper, ILogger logger)
                 : base(repository, mapper, logger) { }
 
             public override async Task<Result> Handle(Command request)
             {
-                var entity = await Repository.GetBy(request.ProductCategoryId);
+                var entity = await Repository.GetBy(request.ArtistId);
 
                 if (entity == null)
-                    return Result.Failure(GenericErrors.NotFound(request.ProductCategoryId));
+                    return Result.Failure(GenericErrors.NotFound(request.ArtistId));
 
                 await Repository.Delete(entity);
 

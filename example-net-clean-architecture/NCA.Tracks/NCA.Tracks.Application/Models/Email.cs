@@ -1,4 +1,4 @@
-﻿namespace NCA.Production.Application.Models
+﻿namespace NCA.Tracks.Application.Models
 {
     public class Email
     {

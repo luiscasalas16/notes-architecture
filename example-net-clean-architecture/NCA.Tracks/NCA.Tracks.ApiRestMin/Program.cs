@@ -2,10 +2,10 @@ using System.Reflection;
 using NCA.Common.Api.Exceptions;
 using NCA.Common.Api.Helpers;
 using NCA.Common.Infrastructure.Log;
-using NCA.Production.Application;
-using NCA.Production.Infrastructure;
+using NCA.Tracks.Application;
+using NCA.Tracks.Infrastructure;
 
-namespace NCA.Production.ApiRestMin
+namespace NCA.Tracks.ApiRestMin
 {
     public class Program
     {

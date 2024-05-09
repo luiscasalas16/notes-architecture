@@ -1,20 +1,20 @@
-﻿using NCA.Production.Application.Features.Products.Queries;
+﻿using NCA.Tracks.Application.Features.Albums.Queries;
 
-namespace NCA.Production.ApiRestMin.Endpoints
+namespace NCA.Tracks.ApiRestMin.Endpoints
 {
-    public class Products : EndpointGroup
+    public class Albums : EndpointGroup
     {
         public override void Map(WebApplication app)
         {
             // csharpier-ignore
             app.Group(this)
 
-                .Get(GetProducts)
+                .Get(GetAlbums)
 
                 ;
         }
 
-        public Task<Result<List<GetProducts.Response>>> GetProducts(ISender sender, [AsParameters] GetProducts.Query query)
+        public Task<Result<List<GetAlbums.Response>>> GetAlbums(ISender sender, [AsParameters] GetAlbums.Query query)
         {
             return sender.Send(query);
         }

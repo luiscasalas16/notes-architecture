@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace NCA.Production.Application.Features.Tests.Commands
+namespace NCA.Tracks.Application.Features.Tests.Commands
 {
     public class TestException
     {

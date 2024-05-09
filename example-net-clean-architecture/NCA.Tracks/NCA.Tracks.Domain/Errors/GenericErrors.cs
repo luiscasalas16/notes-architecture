@@ -1,6 +1,6 @@
 ﻿using NCA.Common.Domain.Models;
 
-namespace NCA.Production.Domain.Errors
+namespace NCA.Tracks.Domain.Errors
 {
     public static class GenericErrors
     {

@@ -1,6 +1,6 @@
-﻿using NCA.Production.Application.Features.Tests.Commands;
+﻿using NCA.Tracks.Application.Features.Tests.Commands;
 
-namespace NCA.Production.ApiRestMin.Endpoints
+namespace NCA.Tracks.ApiRestMin.Endpoints
 {
     public class TestsFeatures : EndpointGroup
     {
