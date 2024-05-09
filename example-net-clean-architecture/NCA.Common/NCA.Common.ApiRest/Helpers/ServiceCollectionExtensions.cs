@@ -117,7 +117,7 @@ namespace NCA.Common.Api.Helpers
         {
             ArgumentNullException.ThrowIfNull(app);
 
-            if (versions != null)
+            if (versions != null && versions.Length != 0)
             {
                 var apiVersionBuilder = ((WebApplication)app).NewApiVersionSet();
 

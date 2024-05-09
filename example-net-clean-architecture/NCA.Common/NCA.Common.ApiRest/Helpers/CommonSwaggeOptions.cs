@@ -28,7 +28,12 @@ namespace NCA.Common.ApiRest.Helpers
             // note: you might choose to skip or document deprecated API versions differently
             foreach (var description in provider.ApiVersionDescriptions)
             {
-                var info = new OpenApiInfo() { Version = description.ApiVersion.ToString(), Description = description.IsDeprecated ? "This API version has been deprecated." : null };
+                var info = new OpenApiInfo()
+                {
+                    Title = System.Reflection.Assembly.GetEntryAssembly()?.ManifestModule.Name.Replace(".dll", string.Empty),
+                    Version = description.ApiVersion.ToString(),
+                    Description = description.IsDeprecated ? "This API version has been deprecated." : string.Empty
+                };
 
                 options.SwaggerDoc(description.GroupName, info);
             }
