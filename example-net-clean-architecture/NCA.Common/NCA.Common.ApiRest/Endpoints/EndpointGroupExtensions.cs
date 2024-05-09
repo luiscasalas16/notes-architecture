@@ -1,17 +1,26 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Reflection;
+using Asp.Versioning;
+using Asp.Versioning.Conventions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using System.Reflection;
 
 namespace NCA.Common.Api.Endpoints
 {
     public static class EndpointGroupExtensions
     {
-        public static RouteGroupBuilder Group(this WebApplication app, EndpointGroup group, string version = "v1")
+        public static RouteGroupBuilder Group(this WebApplication app, EndpointGroup group)
         {
+            var apiVersionBuilder = app.NewApiVersionSet();
+
+            foreach (var versionDescription in app.DescribeApiVersions())
+                apiVersionBuilder.HasApiVersion(versionDescription.ApiVersion);
+
+            var apiVersionSet = apiVersionBuilder.Build();
+
             var groupName = group.GetType().Name;
 
-            return app.MapGroup($"/api/{version}/{groupName}").WithTags(groupName).WithOpenApi();
+            return app.MapGroup("/api/v{version:apiVersion}/" + groupName).WithTags(groupName).WithOpenApi().WithApiVersionSet(apiVersionSet);
         }
 
         public static IEndpointConventionBuilder Get(this IEndpointRouteBuilder builder, Delegate handler)

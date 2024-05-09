@@ -31,6 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCA.Common.Scheduler", "NCA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NCA.Tracks", "NCA.Tracks", "{808B1CCB-8085-42FB-833D-60AB749852C4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{640A4273-125D-4457-9B47-DDE56E508D49}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

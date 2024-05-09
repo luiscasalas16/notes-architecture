@@ -1,6 +1,4 @@
 using System.Reflection;
-using NCA.Common.Api.Exceptions;
-using NCA.Common.Api.Helpers;
 using NCA.Common.Infrastructure.Log;
 using NCA.Tracks.Application;
 using NCA.Tracks.Infrastructure;
@@ -19,12 +17,12 @@ namespace NCA.Tracks.ApiRestMin
 
             //swagger
             builder.Services.AddCommonSwagger();
-
             // global exceptions handler
             builder.Services.AddCommonExceptionHandler();
-
             // health check
             builder.Services.AddCommonHealthCheck();
+            // versioning
+            builder.Services.AddCommonVersioning();
 
             // dependency injection Application
             builder.Services.AddApplicationServices();
@@ -44,12 +42,12 @@ namespace NCA.Tracks.ApiRestMin
                 //swagger
                 app.UseCommonSwagger();
             }
-
             // global exceptions handler
             app.UseCommonExceptionHandler();
-
             // health check
             app.UseCommonHealthCheck();
+            // versioning
+            app.UseCommonVersioning();
 
             // map minimals endpoints groups
             app.MapEndpoints(Assembly.GetExecutingAssembly());
