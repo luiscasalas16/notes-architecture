@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using NCA.Common.Application.Maps;
 
 namespace NCA.Tracks.Application.Maps
 {

@@ -4,11 +4,11 @@
     {
         public class Query : IRequest<Result<List<Response>>>
         {
-            public string? FilterName { get; set; }
+            public string? FilterTitle { get; set; }
 
-            public Query(string? filterName)
+            public Query(string? filterTitle)
             {
-                FilterName = filterName;
+                FilterTitle = filterTitle;
             }
         }
 
@@ -27,17 +27,15 @@
             {
                 var entities = await _repository.Get();
 
-                return Result<List<Response>>.Success(_mapper.Map<List<Response>>(entities));
+                return Result.Success(_mapper.Map<List<Response>>(entities));
             }
         }
 
         public class Response : IMapFrom<Album>
         {
             public int AlbumId { get; set; }
-
-            public string Name { get; set; } = null!;
-
-            public string AlbumNumber { get; set; } = null!;
+            public string Title { get; set; } = null!;
+            public int ArtistId { get; set; }
         }
     }
 }

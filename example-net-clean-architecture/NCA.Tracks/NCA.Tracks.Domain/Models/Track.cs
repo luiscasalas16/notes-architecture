@@ -1,9 +1,13 @@
-﻿using NCA.Common.Domain.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using NCA.Common.Domain.Models;
 
 namespace NCA.Tracks.Domain.Models;
 
+[Table("Track")]
 public partial class Track : EntityObject
 {
+    [Key]
     public int TrackId { get; set; }
 
     public string Name { get; set; } = null!;

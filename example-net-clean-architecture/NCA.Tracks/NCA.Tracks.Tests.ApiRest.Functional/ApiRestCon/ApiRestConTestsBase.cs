@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using NCA.Tracks.ApiRestCon;
+﻿using NCA.Tracks.ApiRestCon;
 
 namespace NCA.Tracks.Tests.ApiRest.Functional.ApiRestCon
 {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NCA.Tracks.Application.Services;
 using NCA.Tracks.Infrastructure.Repositories;
 using NCA.Tracks.Infrastructure.Services;
 

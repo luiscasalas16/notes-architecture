@@ -1,7 +1,4 @@
-﻿using System.Net;
-using System.Net.Http.Json;
-using FluentAssertions;
-using NCA.Tracks.Application.Features.Artists.Queries;
+﻿using NCA.Tracks.Application.Features.Artists.Queries;
 
 namespace NCA.Tracks.Tests.ApiRest.Functional.ApiRestCon
 {

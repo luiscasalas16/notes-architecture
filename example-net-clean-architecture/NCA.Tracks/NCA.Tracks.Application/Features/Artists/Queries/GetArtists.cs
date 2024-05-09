@@ -28,7 +28,6 @@
         public class Response : IMapFrom<Artist>
         {
             public int ArtistId { get; set; }
-
             public string Name { get; set; } = null!;
         }
     }

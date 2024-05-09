@@ -1,7 +1,4 @@
-﻿using NCA.Tracks.Application.Repositories;
-using NCA.Tracks.Domain.Errors;
-
-namespace NCA.Tracks.Application.Features.Artists.Commands
+﻿namespace NCA.Tracks.Application.Features.Artists.Commands
 {
     public class CreateArtist
     {

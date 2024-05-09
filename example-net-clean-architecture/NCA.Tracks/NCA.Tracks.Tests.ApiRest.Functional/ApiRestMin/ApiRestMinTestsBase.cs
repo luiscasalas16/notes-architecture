@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using NCA.Tracks.ApiRestMin;
+﻿using NCA.Tracks.ApiRestMin;
 
 namespace NCA.Tracks.Tests.ApiRest.Functional.ApiRestMin
 {
