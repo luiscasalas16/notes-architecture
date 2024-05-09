@@ -2,11 +2,14 @@
 
 namespace NCA.Tracks.ApiRestMin.Endpoints
 {
-    public class TestsFeatures : EndpointGroup
+    public class TestsFeatures : EndpointsMapper
     {
-        public override void Map(WebApplication app)
+        public TestsFeatures(WebApplication webApplication)
+            : base(webApplication) { }
+
+        public override void Map()
         {
-            var group = app.Group(this);
+            var group = Group();
 
             group.Get("FeatureValidation", TestValidation);
             group.Get("FeatureException", TestException);

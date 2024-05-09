@@ -1,9 +1,9 @@
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using NCA.COL.Infrastructure.Repositories;
 using NCA.Common.Api.Endpoints;
 using NCA.Common.Api.Helpers;
 using NCA.Common.Infrastructure.Log;
-using Microsoft.EntityFrameworkCore;
 
 namespace NCA.Common.Scheduler
 {
@@ -20,13 +20,13 @@ namespace NCA.Common.Scheduler
             var builder = WebApplication.CreateBuilder(args);
 
             //swagger
-            builder.Services.AddCommonSwagger();
+            builder.AddCommonSwagger();
 
             // global exceptions handler
-            builder.Services.AddCommonExceptionHandler();
+            builder.AddCommonExceptionHandler();
 
             // health check
-            builder.Services.AddCommonHealthCheck();
+            builder.AddCommonHealthCheck();
 
             // dependency injection scheduler
             builder.Services.AddSchedulerServices(builder.Configuration);

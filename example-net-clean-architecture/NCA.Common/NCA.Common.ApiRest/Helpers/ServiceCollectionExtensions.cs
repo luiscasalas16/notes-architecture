@@ -1,103 +1,26 @@
-﻿using Asp.Versioning;
+﻿using System.Reflection;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using NCA.Common.Api.Exceptions;
 using NCA.Common.ApiRest.Helpers;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace NCA.Common.Api.Helpers
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCommonSwagger(this IServiceCollection services)
+        public static WebApplicationBuilder AddCommonVersions(this WebApplicationBuilder webApplicationBuilder, int? defaultVersion = null, int[]? versions = null)
         {
-            ArgumentNullException.ThrowIfNull(services);
+            ArgumentNullException.ThrowIfNull(webApplicationBuilder);
 
-            //swagger
-            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, CommonSwaggeOptions>();
-            services.AddSwaggerGen(options =>
-            {
-                options.CustomSchemaIds(x => x.FullName);
-                //fix the error System.InvalidOperationException: Can't use schemaId "$MyType" for type "$OneNamespace.MyType". The same schemaId is already used for type "$OtherNamespace.MyType".
-                options.CustomSchemaIds(s => s.FullName!.Replace("+", "."));
-            });
+            webApplicationBuilder.Services.AddEndpointsApiExplorer();
 
-            return services;
-        }
-
-        public static IApplicationBuilder UseCommonSwagger(this IApplicationBuilder app)
-        {
-            ArgumentNullException.ThrowIfNull(app);
-
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                var descriptions = ((WebApplication)app).DescribeApiVersions();
-
-                // build a swagger endpoint for each discovered API version
-                foreach (var groupName in descriptions.Select(t => t.GroupName))
-                {
-                    var url = $"/swagger/{groupName}/swagger.json";
-                    var name = groupName.ToUpperInvariant();
-                    options.SwaggerEndpoint(url, name);
-                }
-            });
-
-            return app;
-        }
-
-        public static IServiceCollection AddCommonExceptionHandler(this IServiceCollection services)
-        {
-            ArgumentNullException.ThrowIfNull(services);
-
-            services.Configure<RouteHandlerOptions>(o =>
-            {
-                o.ThrowOnBadRequest = true;
-            });
-            services.AddExceptionHandler<GlobalExceptionHandler>();
-            services.AddProblemDetails();
-
-            return services;
-        }
-
-        public static IApplicationBuilder UseCommonExceptionHandler(this IApplicationBuilder app)
-        {
-            ArgumentNullException.ThrowIfNull(app);
-
-            app.UseExceptionHandler();
-
-            return app;
-        }
-
-        public static IServiceCollection AddCommonHealthCheck(this IServiceCollection services)
-        {
-            ArgumentNullException.ThrowIfNull(services);
-
-            services.AddHealthChecks();
-
-            return services;
-        }
-
-        public static IApplicationBuilder UseCommonHealthCheck(this IApplicationBuilder app)
-        {
-            ArgumentNullException.ThrowIfNull(app);
-
-            // https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-probe-overview#default-health-probe
-            app.UseHealthChecks("/");
-
-            return app;
-        }
-
-        public static IServiceCollection AddCommonVersioning(this IServiceCollection services, int? defaultVersion = null)
-        {
-            ArgumentNullException.ThrowIfNull(services);
-
-            // Add services to the container.
-            services.AddEndpointsApiExplorer();
-            services
-                .AddApiVersioning(options =>
+            webApplicationBuilder
+                .Services.AddApiVersioning(options =>
                 {
                     options.DefaultApiVersion = new ApiVersion(defaultVersion ?? 1);
                     options.ReportApiVersions = true;
@@ -110,16 +33,23 @@ namespace NCA.Common.Api.Helpers
                     options.SubstituteApiVersionInUrl = true;
                 });
 
-            return services;
+            webApplicationBuilder.Services.Configure<ServiceArquitectureOptions.Versions>(options =>
+            {
+                options.ApiVersions = versions != null && versions.Length != 0 ? versions : [1];
+            });
+
+            return webApplicationBuilder;
         }
 
-        public static IApplicationBuilder UseCommonVersioning(this IApplicationBuilder app, int[]? versions = null)
+        public static WebApplication UseCommonVersions(this WebApplication webApplication)
         {
-            ArgumentNullException.ThrowIfNull(app);
+            ArgumentNullException.ThrowIfNull(webApplication);
+
+            var versions = webApplication.Services.GetRequiredService<IOptionsMonitor<ServiceArquitectureOptions.Versions>>().CurrentValue.ApiVersions;
 
             if (versions != null && versions.Length != 0)
             {
-                var apiVersionBuilder = ((WebApplication)app).NewApiVersionSet();
+                var apiVersionBuilder = webApplication.NewApiVersionSet();
 
                 foreach (var version in versions)
                     apiVersionBuilder.HasApiVersion(new ApiVersion(version));
@@ -128,10 +58,101 @@ namespace NCA.Common.Api.Helpers
             }
             else
             {
-                ((WebApplication)app).NewApiVersionSet().HasApiVersion(new ApiVersion(1)).ReportApiVersions().Build();
+                webApplication.NewApiVersionSet().HasApiVersion(new ApiVersion(1)).ReportApiVersions().Build();
             }
 
-            return app;
+            return webApplication;
+        }
+
+        public static WebApplicationBuilder AddCommonExceptionHandler(this WebApplicationBuilder webApplicationBuilder)
+        {
+            ArgumentNullException.ThrowIfNull(webApplicationBuilder);
+
+            webApplicationBuilder.Services.Configure<RouteHandlerOptions>(o =>
+            {
+                o.ThrowOnBadRequest = true;
+            });
+            webApplicationBuilder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            webApplicationBuilder.Services.AddProblemDetails();
+
+            return webApplicationBuilder;
+        }
+
+        public static WebApplication UseCommonExceptionHandler(this WebApplication webApplication)
+        {
+            ArgumentNullException.ThrowIfNull(webApplication);
+
+            webApplication.UseExceptionHandler();
+
+            return webApplication;
+        }
+
+        public static WebApplicationBuilder AddCommonHealthCheck(this WebApplicationBuilder webApplicationBuilder)
+        {
+            ArgumentNullException.ThrowIfNull(webApplicationBuilder);
+
+            webApplicationBuilder.Services.AddHealthChecks();
+
+            return webApplicationBuilder;
+        }
+
+        public static WebApplication UseCommonHealthCheck(this WebApplication webApplication)
+        {
+            ArgumentNullException.ThrowIfNull(webApplication);
+
+            // https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-probe-overview#default-health-probe
+            webApplication.UseHealthChecks("/");
+
+            return webApplication;
+        }
+
+        public static WebApplicationBuilder AddCommonSwagger(this WebApplicationBuilder webApplicationBuilder)
+        {
+            ArgumentNullException.ThrowIfNull(webApplicationBuilder);
+
+            using (ServiceProvider serviceProvider = webApplicationBuilder.Services.BuildServiceProvider())
+            {
+                var versions = serviceProvider.GetRequiredService<IOptionsMonitor<ServiceArquitectureOptions.Versions>>().CurrentValue.ApiVersions;
+
+                //swagger
+                webApplicationBuilder.Services.AddEndpointsApiExplorer();
+                webApplicationBuilder.Services.AddSwaggerGen(options =>
+                {
+                    //fix the error System.InvalidOperationException: Can't use schemaId "$MyType" for type "$OneNamespace.MyType". The same schemaId is already used for type "$OtherNamespace.MyType".
+                    options.CustomSchemaIds(x => x.FullName);
+                    options.CustomSchemaIds(s => s.FullName!.Replace("+", "."));
+
+                    //register api versions
+                    foreach (var version in versions)
+                    {
+                        options.SwaggerDoc(
+                            $"v{version}",
+                            new OpenApiInfo() { Title = $"{Assembly.GetEntryAssembly()?.ManifestModule.Name.Replace(".dll", string.Empty)} v{version}", Version = $"v{version}" }
+                        );
+                    }
+                });
+            }
+
+            return webApplicationBuilder;
+        }
+
+        public static WebApplication UseCommonSwagger(this WebApplication webApplication)
+        {
+            ArgumentNullException.ThrowIfNull(webApplication);
+
+            if (webApplication.Environment.IsDevelopment())
+            {
+                var versions = webApplication.Services.GetRequiredService<IOptionsMonitor<ServiceArquitectureOptions.Versions>>().CurrentValue.ApiVersions;
+
+                webApplication.UseSwagger();
+                webApplication.UseSwaggerUI(options =>
+                {
+                    foreach (var version in versions)
+                        options.SwaggerEndpoint($"/swagger/v{version}/swagger.json", $"v{version}");
+                });
+            }
+
+            return webApplication;
         }
     }
 }

@@ -5,11 +5,6 @@
         public class Command : CommandBase<Result>
         {
             public int ArtistId { get; set; }
-
-            public Command(int ArtistId)
-            {
-                ArtistId = ArtistId;
-            }
         }
 
         public class CommandHandler : CommandHandlerRepositoryBase<Command, Result, IArtistRepository>

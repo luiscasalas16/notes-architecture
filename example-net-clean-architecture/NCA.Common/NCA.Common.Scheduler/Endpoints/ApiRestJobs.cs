@@ -1,16 +1,19 @@
-﻿using NCA.Common.Api.Endpoints;
+﻿using MediatR;
+using NCA.Common.Api.Endpoints;
 using NCA.Common.Application.Results;
 using NCA.Common.Scheduler.Features.ApiRestJobs.Commands;
 using NCA.Common.Scheduler.Features.ApiRestJobs.Queries;
-using MediatR;
 
 namespace NCA.Common.Scheduler.Endpoints
 {
-    public class ApiRestJobs : EndpointGroup
+    public class ApiRestJobs : EndpointsMapper
     {
-        public override void Map(WebApplication app)
+        public ApiRestJobs(WebApplication webApplication)
+            : base(webApplication) { }
+
+        public override void Map()
         {
-            var group = app.Group(this);
+            var group = Group();
 
             group.Get("/status", ApiRestJobsStatus);
             group.Get("/active", ApiRestJobActive);

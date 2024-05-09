@@ -1,18 +1,22 @@
 ﻿using NCA.Tracks.Application.Features.Artists.Commands;
 using NCA.Tracks.Application.Features.Artists.Queries;
+using NCA.Tracks.Domain.Models;
 
 namespace NCA.Tracks.ApiRestMin.Endpoints
 {
-    public class Artists : EndpointGroup
+    public class Artists : EndpointsMapper
     {
-        public override void Map(WebApplication app)
+        public Artists(WebApplication webApplication)
+            : base(webApplication) { }
+
+        public override void Map()
         {
-            var group = app.Group(this);
+            var group = Group();
 
             group.Get(GetArtists);
             group.Post(CreateArtist);
             group.Put(UpdateArtist);
-            group.Delete("{ArtistId}", DeleteArtist);
+            group.Delete("{id}", DeleteArtist, versions: [2]);
         }
 
         public async Task<Result<List<GetArtists.Response>>> GetArtists(ISender sender, [AsParameters] GetArtists.Query query)
@@ -30,9 +34,9 @@ namespace NCA.Tracks.ApiRestMin.Endpoints
             return await sender.Send(command);
         }
 
-        public async Task<Result> DeleteArtist(ISender sender, int ArtistId)
+        public async Task<Result> DeleteArtist(ISender sender, int id)
         {
-            return await sender.Send(new DeleteArtist.Command(ArtistId));
+            return await sender.Send(new DeleteArtist.Command() { ArtistId = id });
         }
 
         //public Task<List<GetArtists.Response>> GetArtists(ISender sender, [AsParameters] GetArtists.Query query)

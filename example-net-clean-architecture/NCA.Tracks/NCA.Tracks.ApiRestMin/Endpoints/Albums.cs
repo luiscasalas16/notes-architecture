@@ -2,11 +2,14 @@
 
 namespace NCA.Tracks.ApiRestMin.Endpoints
 {
-    public class Albums : EndpointGroup
+    public class Albums : EndpointsMapper
     {
-        public override void Map(WebApplication app)
+        public Albums(WebApplication webApplication)
+            : base(webApplication) { }
+
+        public override void Map()
         {
-            var group = app.Group(this);
+            var group = Group();
 
             group.Get(GetAlbums);
         }

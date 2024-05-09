@@ -2,17 +2,20 @@
 
 namespace NCA.Tracks.ApiRestMin.Endpoints
 {
-    public class TestsResults : EndpointGroup
+    public class TestsResults : EndpointsMapper
     {
-        public override void Map(WebApplication app)
+        public TestsResults(WebApplication webApplication)
+            : base(webApplication) { }
+
+        public override void Map()
         {
-            var group = app.Group(this);
+            var group = Group();
 
             group.Get("ResultSuccess", () => Result.Success());
 
-            group.Get("ResultSuccessInt", () => Result<int>.Success(1));
+            group.Get("ResultSuccessInt", () => Result.Success(1));
 
-            group.Get("ResultSuccessString", () => Result<string>.Success("hello world!"));
+            group.Get("ResultSuccessString", () => Result.Success("hello world!"));
 
             group.Get(
                 "ResultSuccessObject",

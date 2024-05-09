@@ -15,14 +15,14 @@ namespace NCA.Tracks.ApiRestMin
 
             var builder = WebApplication.CreateBuilder(args);
 
-            //swagger
-            builder.Services.AddCommonSwagger();
+            // versions
+            builder.AddCommonVersions(versions: [1, 2]);
             // global exceptions handler
-            builder.Services.AddCommonExceptionHandler();
+            builder.AddCommonExceptionHandler();
             // health check
-            builder.Services.AddCommonHealthCheck();
-            // versioning
-            builder.Services.AddCommonVersioning();
+            builder.AddCommonHealthCheck();
+            // swagger
+            builder.AddCommonSwagger();
 
             // dependency injection Application
             builder.Services.AddApplicationServices();
@@ -37,17 +37,18 @@ namespace NCA.Tracks.ApiRestMin
             // Configure
             //----------
 
+            // versioning
+            app.UseCommonVersions();
+            // global exceptions handler
+            app.UseCommonExceptionHandler();
+            // health check
+            app.UseCommonHealthCheck();
+
             if (app.Environment.IsDevelopment())
             {
                 //swagger
                 app.UseCommonSwagger();
             }
-            // global exceptions handler
-            app.UseCommonExceptionHandler();
-            // health check
-            app.UseCommonHealthCheck();
-            // versioning
-            app.UseCommonVersioning();
 
             // map minimals endpoints groups
             app.MapEndpoints(Assembly.GetExecutingAssembly());
