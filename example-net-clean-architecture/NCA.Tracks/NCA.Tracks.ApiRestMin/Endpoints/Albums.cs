@@ -6,12 +6,9 @@ namespace NCA.Tracks.ApiRestMin.Endpoints
     {
         public override void Map(WebApplication app)
         {
-            // csharpier-ignore
-            app.Group(this)
+            var group = app.Group(this);
 
-                .Get(GetAlbums)
-
-                ;
+            group.Get(GetAlbums);
         }
 
         public Task<Result<List<GetAlbums.Response>>> GetAlbums(ISender sender, [AsParameters] GetAlbums.Query query)

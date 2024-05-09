@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NCA.Common.Scheduler.Jobs;
+﻿using NCA.Common.Scheduler.Jobs;
+using Microsoft.EntityFrameworkCore;
 
 namespace NCA.COL.Infrastructure.Repositories
 {

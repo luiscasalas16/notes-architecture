@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using MediatR;
 using NCA.COL.Infrastructure.Repositories;
 using NCA.Common.Application.Behaviours;
 using NCA.Common.Scheduler.Jobs;
+using MediatR;
 using Quartz;
 
 namespace NCA.Common.Scheduler

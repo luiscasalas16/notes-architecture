@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using System.Reflection;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using System.Reflection;
 
 namespace NCA.Common.Api.Endpoints
 {
@@ -15,69 +14,57 @@ namespace NCA.Common.Api.Endpoints
             return app.MapGroup($"/api/{version}/{groupName}").WithTags(groupName).WithOpenApi();
         }
 
-        public static IEndpointRouteBuilder Get(this IEndpointRouteBuilder builder, Delegate handler)
+        public static IEndpointConventionBuilder Get(this IEndpointRouteBuilder builder, Delegate handler)
         {
             return Get(builder, "", handler);
         }
 
-        public static IEndpointRouteBuilder Get(this IEndpointRouteBuilder builder, string pattern, Delegate handler)
+        public static IEndpointConventionBuilder Get(this IEndpointRouteBuilder builder, string pattern, Delegate handler)
         {
-            if (handler.Method.IsAnonymous())
-                builder.MapGet(pattern, handler).WithOpenApi();
-            else
-                builder.MapGet(pattern, handler).WithName(handler.Method.Name).WithOpenApi();
-
-            return builder;
+            return handler.Method.IsAnonymous()
+                ? builder.MapGet(pattern, handler).WithOpenApi()
+                : (IEndpointConventionBuilder)builder.MapGet(pattern, handler).WithName(handler.Method.Name).WithOpenApi();
         }
 
-        public static IEndpointRouteBuilder PostPatternHandlerName(this IEndpointRouteBuilder builder, Delegate handler)
+        public static IEndpointConventionBuilder PostPatternHandlerName(this IEndpointRouteBuilder builder, Delegate handler)
         {
             return Post(builder, handler.Method.Name, handler);
         }
 
-        public static IEndpointRouteBuilder Post(this IEndpointRouteBuilder builder, Delegate handler)
+        public static IEndpointConventionBuilder Post(this IEndpointRouteBuilder builder, Delegate handler)
         {
             return Post(builder, "", handler);
         }
 
-        public static IEndpointRouteBuilder Post(this IEndpointRouteBuilder builder, string pattern, Delegate handler)
+        public static IEndpointConventionBuilder Post(this IEndpointRouteBuilder builder, string pattern, Delegate handler)
         {
-            if (handler.Method.IsAnonymous())
-                builder.MapPost(pattern, handler).WithOpenApi();
-            else
-                builder.MapPost(pattern, handler).WithName(handler.Method.Name).WithOpenApi();
-
-            return builder;
+            return handler.Method.IsAnonymous()
+                ? builder.MapPost(pattern, handler).WithOpenApi()
+                : (IEndpointConventionBuilder)builder.MapPost(pattern, handler).WithName(handler.Method.Name).WithOpenApi();
         }
 
-        public static IEndpointRouteBuilder Put(this IEndpointRouteBuilder builder, Delegate handler)
+        public static IEndpointConventionBuilder Put(this IEndpointRouteBuilder builder, Delegate handler)
         {
             return Put(builder, "", handler);
         }
 
-        public static IEndpointRouteBuilder Put(this IEndpointRouteBuilder builder, string pattern, Delegate handler)
+        public static IEndpointConventionBuilder Put(this IEndpointRouteBuilder builder, string pattern, Delegate handler)
         {
-            if (handler.Method.IsAnonymous())
-                builder.MapPut(pattern, handler).WithOpenApi();
-            else
-                builder.MapPut(pattern, handler).WithName(handler.Method.Name).WithOpenApi();
-
-            return builder;
+            return handler.Method.IsAnonymous()
+                ? builder.MapPut(pattern, handler).WithOpenApi()
+                : (IEndpointConventionBuilder)builder.MapPut(pattern, handler).WithName(handler.Method.Name).WithOpenApi();
         }
 
-        public static IEndpointRouteBuilder Delete(this IEndpointRouteBuilder builder, Delegate handler)
+        public static IEndpointConventionBuilder Delete(this IEndpointRouteBuilder builder, Delegate handler)
         {
             return Delete(builder, "", handler);
         }
 
-        public static IEndpointRouteBuilder Delete(this IEndpointRouteBuilder builder, string pattern, Delegate handler)
+        public static IEndpointConventionBuilder Delete(this IEndpointRouteBuilder builder, string pattern, Delegate handler)
         {
-            if (handler.Method.IsAnonymous())
-                builder.MapDelete(pattern, handler).WithOpenApi();
-            else
-                builder.MapDelete(pattern, handler).WithName(handler.Method.Name).WithOpenApi();
-
-            return builder;
+            return handler.Method.IsAnonymous()
+                ? builder.MapDelete(pattern, handler).WithOpenApi()
+                : (IEndpointConventionBuilder)builder.MapDelete(pattern, handler).WithName(handler.Method.Name).WithOpenApi();
         }
 
         public static WebApplication MapEndpoints(this WebApplication app, Assembly assembly)

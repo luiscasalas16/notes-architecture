@@ -1,8 +1,8 @@
-﻿using MediatR;
-using NCA.Common.Api.Endpoints;
+﻿using NCA.Common.Api.Endpoints;
 using NCA.Common.Application.Results;
 using NCA.Common.Scheduler.Features.ApiRestJobs.Commands;
 using NCA.Common.Scheduler.Features.ApiRestJobs.Queries;
+using MediatR;
 
 namespace NCA.Common.Scheduler.Endpoints
 {
@@ -10,11 +10,11 @@ namespace NCA.Common.Scheduler.Endpoints
     {
         public override void Map(WebApplication app)
         {
-            // csharpier-ignore
-            app.Group(this)
-                .Get("/status", ApiRestJobsStatus)
-                .Get("/active", ApiRestJobActive)
-                .Get("/inactive", ApiRestJobInactive);
+            var group = app.Group(this);
+
+            group.Get("/status", ApiRestJobsStatus);
+            group.Get("/active", ApiRestJobActive);
+            group.Get("/inactive", ApiRestJobInactive);
         }
 
         public async Task<Result<List<Status.Response>>> ApiRestJobsStatus(ISender sender, [AsParameters] Status.Query query)

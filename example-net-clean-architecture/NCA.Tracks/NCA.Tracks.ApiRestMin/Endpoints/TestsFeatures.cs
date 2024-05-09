@@ -6,14 +6,10 @@ namespace NCA.Tracks.ApiRestMin.Endpoints
     {
         public override void Map(WebApplication app)
         {
-            // csharpier-ignore
-            app.Group(this)
+            var group = app.Group(this);
 
-                .Get("FeatureValidation", TestValidation)
-
-                .Get("FeatureException", TestException)
-
-                ;
+            group.Get("FeatureValidation", TestValidation);
+            group.Get("FeatureException", TestException);
         }
 
         public async Task<Result> TestException(ISender sender)

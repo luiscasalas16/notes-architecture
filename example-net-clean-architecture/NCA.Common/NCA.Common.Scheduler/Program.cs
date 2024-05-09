@@ -1,9 +1,9 @@
 using System.Reflection;
-using Microsoft.EntityFrameworkCore;
 using NCA.COL.Infrastructure.Repositories;
 using NCA.Common.Api.Endpoints;
 using NCA.Common.Api.Helpers;
 using NCA.Common.Infrastructure.Log;
+using Microsoft.EntityFrameworkCore;
 
 namespace NCA.Common.Scheduler
 {

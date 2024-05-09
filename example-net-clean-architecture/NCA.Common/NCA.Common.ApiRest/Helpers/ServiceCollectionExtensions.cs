@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using NCA.Common.Api.Exceptions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using NCA.Common.Api.Exceptions;
 
 namespace NCA.Common.Api.Helpers
 {

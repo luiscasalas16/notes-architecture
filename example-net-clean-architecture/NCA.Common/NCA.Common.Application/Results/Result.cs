@@ -60,6 +60,11 @@ namespace NCA.Common.Application.Results
             return new Result<TDestination>(result.Code, result.Errors);
         }
 
+        public static Result<TDestination> Convert<TDestination>(Result result)
+        {
+            return new Result<TDestination>(result.Code, result.Errors);
+        }
+
         #region IResult
 
         int? IStatusCodeHttpResult.StatusCode => Code;

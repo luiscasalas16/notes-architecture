@@ -7,13 +7,12 @@ namespace NCA.Tracks.ApiRestMin.Endpoints
     {
         public override void Map(WebApplication app)
         {
-            // csharpier-ignore
-            app.Group(this)
-                .Get(GetArtists)
-                .Post(CreateArtist)
-                .Put(UpdateArtist)
-                .Delete("{ArtistId}", DeleteArtist)
-                ;
+            var group = app.Group(this);
+
+            group.Get(GetArtists);
+            group.Post(CreateArtist);
+            group.Put(UpdateArtist);
+            group.Delete("{ArtistId}", DeleteArtist);
         }
 
         public async Task<Result<List<GetArtists.Response>>> GetArtists(ISender sender, [AsParameters] GetArtists.Query query)
