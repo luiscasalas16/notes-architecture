@@ -118,6 +118,7 @@ Los siguientes puntos de arquitectura fueron incluidos en la arquitectura:
     - <https://github.com/saadjaved120/CleanArchitecture_CQRS_Pub-Sub>
     - <https://github.com/sashamarfuttech/super-note-api>
   - TODO
+    - <https://learn.microsoft.com/en-us/aspnet/core/performance/caching/output>
     - <https://github.com/phongnguyend/Practical.CleanArchitecture>
     - <https://github.com/kalintsenkov/BookStore/tree/main>
     - <https://github.com/DijanaPenic/DDD-VShop/tree/main>
