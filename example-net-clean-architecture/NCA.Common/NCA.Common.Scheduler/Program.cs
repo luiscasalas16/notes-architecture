@@ -19,14 +19,14 @@ namespace NCA.Common.Scheduler
 
             var builder = WebApplication.CreateBuilder(args);
 
-            //swagger
-            builder.AddCommonSwagger();
-
+            // versions
+            builder.AddCommonVersions(versions: [1, 2]);
             // global exceptions handler
             builder.AddCommonExceptionHandler();
-
             // health check
             builder.AddCommonHealthCheck();
+            // swagger
+            builder.AddCommonSwagger();
 
             // dependency injection scheduler
             builder.Services.AddSchedulerServices(builder.Configuration);
@@ -39,22 +39,17 @@ namespace NCA.Common.Scheduler
             // Configure
             //----------
 
-            if (app.Environment.IsDevelopment())
-            {
-                VerifyInfrastructure(builder.Configuration);
-
-                //swagger
-                app.UseCommonSwagger();
-            }
+            // versions
+            app.UseCommonVersions();
+            // global exceptions handler
+            app.UseCommonExceptionHandler();
+            // health check
+            app.UseCommonHealthCheck();
+            //swagger
+            app.UseCommonSwagger();
 
             // map minimals endpoints groups
             app.MapEndpoints(Assembly.GetExecutingAssembly());
-
-            // global exceptions handler
-            app.UseCommonExceptionHandler();
-
-            // health check
-            app.UseCommonHealthCheck();
 
             //----------
             // Run

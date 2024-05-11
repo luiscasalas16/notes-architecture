@@ -37,18 +37,14 @@ namespace NCA.Tracks.ApiRestMin
             // Configure
             //----------
 
-            // versioning
+            // versions
             app.UseCommonVersions();
             // global exceptions handler
             app.UseCommonExceptionHandler();
             // health check
             app.UseCommonHealthCheck();
-
-            if (app.Environment.IsDevelopment())
-            {
-                //swagger
-                app.UseCommonSwagger();
-            }
+            //swagger
+            app.UseCommonSwagger();
 
             // map minimals endpoints groups
             app.MapEndpoints(Assembly.GetExecutingAssembly());
