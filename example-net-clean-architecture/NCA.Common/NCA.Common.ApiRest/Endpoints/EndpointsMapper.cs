@@ -19,7 +19,7 @@ namespace NCA.Common.Api.Endpoints
         {
             WebApplication = webApplication;
             Name = GetType().Name;
-            Versions = webApplication.Services.GetRequiredService<IOptionsMonitor<ServiceArquitectureOptions.Versions>>().CurrentValue.ApiVersions;
+            Versions = webApplication.Services.GetRequiredService<IOptionsMonitor<ServiceArquitectureOptions.Versions>>().CurrentValue.ApiVersions ?? [1];
         }
 
         public abstract void Map();

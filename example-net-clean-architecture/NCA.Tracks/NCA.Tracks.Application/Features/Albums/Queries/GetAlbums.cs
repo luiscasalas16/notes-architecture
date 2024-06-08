@@ -25,7 +25,7 @@
 
             public async Task<Result<List<Response>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entities = await _repository.Get();
+                var entities = await _repository.GetAll();
 
                 return Result.Success(_mapper.Map<List<Response>>(entities));
             }

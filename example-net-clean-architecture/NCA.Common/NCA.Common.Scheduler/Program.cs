@@ -19,8 +19,10 @@ namespace NCA.Common.Scheduler
 
             var builder = WebApplication.CreateBuilder(args);
 
+            //log
+            builder.AddCommonLogs();
             // versions
-            builder.AddCommonVersions(versions: [1, 2]);
+            builder.AddCommonVersions();
             // global exceptions handler
             builder.AddCommonExceptionHandler();
             // health check
@@ -30,14 +32,15 @@ namespace NCA.Common.Scheduler
 
             // dependency injection scheduler
             builder.Services.AddSchedulerServices(builder.Configuration);
-            // dependency injection infrastructure common log
-            builder.Services.AddInfrastructureCommonLogServices();
 
             var app = builder.Build();
 
             //----------
             // Configure
             //----------
+
+            if (app.Environment.IsDevelopment())
+                VerifyInfrastructure(builder.Configuration);
 
             // versions
             app.UseCommonVersions();

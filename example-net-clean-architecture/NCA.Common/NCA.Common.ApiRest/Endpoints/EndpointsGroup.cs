@@ -1,5 +1,4 @@
-﻿using Asp.Versioning.Conventions;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using NCA.Common.Application.Exceptions;
 
@@ -63,25 +62,14 @@ namespace NCA.Common.Api.Endpoints
 
         private RouteHandlerBuilder Common(string method, string pattern, Delegate handler, int[]? versions = null)
         {
-            RouteHandlerBuilder builder;
-
-            switch (method)
+            RouteHandlerBuilder builder = method switch
             {
-                case "Get":
-                    builder = _routeGroupBuilder.MapGet(pattern, handler);
-                    break;
-                case "Post":
-                    builder = _routeGroupBuilder.MapPost(pattern, handler);
-                    break;
-                case "Put":
-                    builder = _routeGroupBuilder.MapPut(pattern, handler);
-                    break;
-                case "Delete":
-                    builder = _routeGroupBuilder.MapDelete(pattern, handler);
-                    break;
-                default:
-                    throw new InvalidOperationException();
-            }
+                "Get" => _routeGroupBuilder.MapGet(pattern, handler),
+                "Post" => _routeGroupBuilder.MapPost(pattern, handler),
+                "Put" => _routeGroupBuilder.MapPut(pattern, handler),
+                "Delete" => _routeGroupBuilder.MapDelete(pattern, handler),
+                _ => throw new InvalidOperationException(),
+            };
 
             if (!handler.Method.IsAnonymous())
             {

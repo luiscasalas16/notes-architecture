@@ -15,7 +15,22 @@ namespace NCA.Common.Infrastructure.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IReadOnlyList<T>> Get(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? order = null, List<Expression<Func<T, object>>>? includes = null, bool tracking = false)
+        public async Task<T?> GetById(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+
+        public async Task<T?> GetSingle(Expression<Func<T, bool>> predicate)
+        {
+            return await _context.Set<T>().SingleOrDefaultAsync(predicate);
+        }
+
+        public async Task<IReadOnlyList<T>> GetAll(
+            Expression<Func<T, bool>>? predicate = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? order = null,
+            List<Expression<Func<T, object>>>? includes = null,
+            bool tracking = false
+        )
         {
             IQueryable<T> query = _context.Set<T>();
 
@@ -34,34 +49,24 @@ namespace NCA.Common.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<T?> GetBy(int id)
-        {
-            return await _context.Set<T>().FindAsync(id);
-        }
-
-        public async Task<T?> GetBy(Expression<Func<T, bool>> predicate)
-        {
-            return await _context.Set<T>().SingleOrDefaultAsync(predicate);
-        }
-
-        public async Task<T> Add(T entity)
+        public void Insert(T entity)
         {
             _context.Set<T>().Add(entity);
-            await _context.SaveChangesAsync();
-            return entity;
         }
 
-        public async Task<T> Update(T entity)
+        public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
-            await _context.SaveChangesAsync();
-            return entity;
         }
 
-        public async Task Delete(T entity)
+        public void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
+        }
+
+        public void Delete(Expression<Func<T, bool>> predicate)
+        {
+            _context.Set<T>().RemoveRange(_context.Set<T>().Where(predicate));
         }
     }
 }

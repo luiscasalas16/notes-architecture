@@ -9,16 +9,18 @@ namespace NCA.Common.Application.Repositories
     public interface IRepository<T> : IRepository
         where T : EntityObject
     {
-        Task<IReadOnlyList<T>> Get(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? order = null, List<Expression<Func<T, object>>>? includes = null, bool tracking = false);
+        Task<T?> GetById(int id);
 
-        Task<T?> GetBy(int id);
+        Task<T?> GetSingle(Expression<Func<T, bool>> predicate);
 
-        Task<T?> GetBy(Expression<Func<T, bool>> predicate);
+        Task<IReadOnlyList<T>> GetAll(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? order = null, List<Expression<Func<T, object>>>? includes = null, bool tracking = false);
 
-        Task<T> Add(T entity);
+        void Insert(T entity);
 
-        Task<T> Update(T entity);
+        void Update(T entity);
 
-        Task Delete(T entity);
+        void Delete(T entity);
+
+        void Delete(Expression<Func<T, bool>> predicate);
     }
 }

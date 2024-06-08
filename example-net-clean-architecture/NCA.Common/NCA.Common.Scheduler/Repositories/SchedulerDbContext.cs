@@ -1,5 +1,6 @@
-﻿using NCA.Common.Scheduler.Jobs;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using NCA.Common.Application.Exceptions;
+using NCA.Common.Scheduler.Jobs;
 
 namespace NCA.COL.Infrastructure.Repositories
 {
@@ -18,7 +19,10 @@ namespace NCA.COL.Infrastructure.Repositories
         public SchedulerDbContext(IConfiguration configuration)
             : base()
         {
-            _connectionString = configuration.GetValue<string>("ConnectionString");
+            _connectionString = configuration["ConnectionString"];
+
+            if (string.IsNullOrEmpty(_connectionString))
+                throw new ConfigurationException("ConnectionString parameter is required.");
         }
 
         // csharpier-ignore

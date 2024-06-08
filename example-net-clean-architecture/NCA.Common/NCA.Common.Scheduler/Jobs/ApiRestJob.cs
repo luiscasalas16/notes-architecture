@@ -57,6 +57,9 @@ namespace NCA.Common.Scheduler.Jobs
 
                         _logger.LogError($"ApiRestJob - {code} - server errror execution in {sw.Elapsed.TotalMilliseconds} milliseconds. Detail : {resultServerError.DetailText}");
                         break;
+                    default:
+                        _logger.LogError($"ApiRestJob - {code} - error execution in {sw.Elapsed.TotalMilliseconds} milliseconds. Status code : {httpResponse.StatusCode}");
+                        break;
                 }
             }
             catch (Exception ex)

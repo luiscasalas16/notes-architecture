@@ -16,6 +16,16 @@ namespace NCA.Common.Application.Abstractions
 
     public abstract class CommandHandlerBase
     {
+        protected readonly IUnitWork _unitWork;
+        protected IUnitWork UnitWork
+        {
+            get
+            {
+                ArgumentNullException.ThrowIfNull(_unitWork);
+                return _unitWork;
+            }
+        }
+
         protected readonly IMapper _mapper;
         protected IMapper Mapper
         {
@@ -37,10 +47,11 @@ namespace NCA.Common.Application.Abstractions
         }
 
         protected CommandHandlerBase()
-            : this(null!, null!) { }
+            : this(null!, null!, null!) { }
 
-        protected CommandHandlerBase(IMapper mapper, ILogger logger)
+        protected CommandHandlerBase(IUnitWork unitWork, IMapper mapper, ILogger logger)
         {
+            _unitWork = unitWork;
             _mapper = mapper;
             _logger = logger;
         }
@@ -50,10 +61,10 @@ namespace NCA.Common.Application.Abstractions
         where TCommand : CommandBase
     {
         protected CommandHandlerBase()
-            : this(null!, null!) { }
+            : this(null!, null!, null!) { }
 
-        protected CommandHandlerBase(IMapper mapper, ILogger logger)
-            : base(mapper, logger) { }
+        protected CommandHandlerBase(IUnitWork unitWork, IMapper mapper, ILogger logger)
+            : base(unitWork, mapper, logger) { }
 
         public async Task<Unit> Handle(TCommand request, CancellationToken cancellationToken)
         {
@@ -68,10 +79,10 @@ namespace NCA.Common.Application.Abstractions
         where TCommand : CommandBase<TResponse>
     {
         protected CommandHandlerBase()
-            : this(null!, null!) { }
+            : this(null!, null!, null!) { }
 
-        protected CommandHandlerBase(IMapper mapper, ILogger logger)
-            : base(mapper, logger) { }
+        protected CommandHandlerBase(IUnitWork unitWork, IMapper mapper, ILogger logger)
+            : base(unitWork, mapper, logger) { }
 
         public async Task<TResponse> Handle(TCommand request, CancellationToken cancellationToken)
         {
@@ -89,12 +100,14 @@ namespace NCA.Common.Application.Abstractions
         protected readonly IMapper Mapper;
         protected readonly ILogger Logger;
         protected readonly TRepository Repository;
+        protected readonly IUnitWork UnitWork;
 
-        protected CommandHandlerRepositoryBase(TRepository repository, IMapper mapper, ILogger logger)
+        protected CommandHandlerRepositoryBase(TRepository repository, IUnitWork unitWork, IMapper mapper, ILogger logger)
         {
+            Repository = repository;
+            UnitWork = unitWork;
             Mapper = mapper;
             Logger = logger;
-            Repository = repository;
         }
     }
 
@@ -102,8 +115,8 @@ namespace NCA.Common.Application.Abstractions
         where TCommand : CommandBase<TResponse>
         where TRepository : IRepository
     {
-        protected CommandHandlerRepositoryBase(TRepository repository, IMapper mapper, ILogger logger)
-            : base(repository, mapper, logger) { }
+        protected CommandHandlerRepositoryBase(TRepository repository, IUnitWork unitWork, IMapper mapper, ILogger logger)
+            : base(repository, unitWork, mapper, logger) { }
 
         public async Task<TResponse> Handle(TCommand request, CancellationToken cancellationToken)
         {
@@ -117,8 +130,8 @@ namespace NCA.Common.Application.Abstractions
         where TCommand : CommandBase
         where TRepository : IRepository
     {
-        protected CommandHandlerRepositoryBase(TRepository repository, IMapper mapper, ILogger logger)
-            : base(repository, mapper, logger) { }
+        protected CommandHandlerRepositoryBase(TRepository repository, IUnitWork unitWork, IMapper mapper, ILogger logger)
+            : base(repository, unitWork, mapper, logger) { }
 
         public async Task<Unit> Handle(TCommand request, CancellationToken cancellationToken)
         {

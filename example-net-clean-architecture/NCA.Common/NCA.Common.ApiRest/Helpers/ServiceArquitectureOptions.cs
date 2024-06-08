@@ -4,7 +4,7 @@
     {
         internal class Versions
         {
-            public int[] ApiVersions { get; set; }
+            public int[]? ApiVersions { get; set; }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using System.Xml.XPath;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -112,7 +114,7 @@ namespace NCA.Common.Api.Helpers
 
             using (ServiceProvider serviceProvider = webApplicationBuilder.Services.BuildServiceProvider())
             {
-                var versions = serviceProvider.GetRequiredService<IOptionsMonitor<ServiceArquitectureOptions.Versions>>().CurrentValue.ApiVersions;
+                var versions = serviceProvider.GetRequiredService<IOptionsMonitor<ServiceArquitectureOptions.Versions>>().CurrentValue.ApiVersions ?? [1];
 
                 //swagger
                 webApplicationBuilder.Services.AddEndpointsApiExplorer();
@@ -140,15 +142,33 @@ namespace NCA.Common.Api.Helpers
         {
             ArgumentNullException.ThrowIfNull(webApplication);
 
+            string? apiGatewayPath = webApplication.Configuration["API_GATEWAY_PATH"];
+
             if (webApplication.Environment.IsDevelopment())
             {
-                var versions = webApplication.Services.GetRequiredService<IOptionsMonitor<ServiceArquitectureOptions.Versions>>().CurrentValue.ApiVersions;
+                var versions = webApplication.Services.GetRequiredService<IOptionsMonitor<ServiceArquitectureOptions.Versions>>().CurrentValue.ApiVersions ?? [1];
 
-                webApplication.UseSwagger();
+                if (string.IsNullOrWhiteSpace(apiGatewayPath))
+                {
+                    webApplication.UseSwagger();
+                }
+                else
+                {
+                    webApplication.UseSwagger(c =>
+                    {
+                        c.PreSerializeFilters.Add(
+                            (options, httpRequest) =>
+                            {
+                                options.Servers = [new OpenApiServer { Url = $"/{apiGatewayPath}" }];
+                            }
+                        );
+                    });
+                }
+
                 webApplication.UseSwaggerUI(options =>
                 {
                     foreach (var version in versions)
-                        options.SwaggerEndpoint($"/swagger/v{version}/swagger.json", $"v{version}");
+                        options.SwaggerEndpoint($"v{version}/swagger.json", $"v{version}");
                 });
             }
 

@@ -9,17 +9,19 @@
 
         public class CommandHandler : CommandHandlerRepositoryBase<Command, Result, IArtistRepository>
         {
-            public CommandHandler(IArtistRepository repository, IMapper mapper, ILogger logger)
-                : base(repository, mapper, logger) { }
+            public CommandHandler(IArtistRepository repository, IUnitWork unitWork, IMapper mapper, ILogger logger)
+                : base(repository, unitWork, mapper, logger) { }
 
             public override async Task<Result> Handle(Command request)
             {
-                var entity = await Repository.GetBy(request.ArtistId);
+                var entity = await Repository.GetById(request.ArtistId);
 
                 if (entity == null)
                     return Result.Failure(GenericErrors.NotFound(request.ArtistId));
 
-                await Repository.Delete(entity);
+                Repository.Delete(entity);
+
+                await UnitWork.Save();
 
                 return Result.Success();
             }

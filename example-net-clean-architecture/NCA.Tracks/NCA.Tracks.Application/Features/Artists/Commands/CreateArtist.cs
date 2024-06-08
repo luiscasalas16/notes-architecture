@@ -9,16 +9,18 @@
 
         public class CommandHandler : CommandHandlerRepositoryBase<Command, Result<int>, IArtistRepository>
         {
-            public CommandHandler(IArtistRepository repository, IMapper mapper, ILogger logger)
-                : base(repository, mapper, logger) { }
+            public CommandHandler(IArtistRepository repository, IUnitWork unitWork, IMapper mapper, ILogger logger)
+                : base(repository, unitWork, mapper, logger) { }
 
             public override async Task<Result<int>> Handle(Command request)
             {
                 var entity = Mapper.Map<Artist>(request);
 
-                var newEntity = await Repository.Add(entity);
+                Repository.Insert(entity);
 
-                return Result<int>.Success(newEntity.ArtistId);
+                await UnitWork.Save();
+
+                return Result<int>.Success(entity.ArtistId);
             }
         }
 
