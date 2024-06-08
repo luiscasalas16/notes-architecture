@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using NCA.Common.Application.Repositories;
 using NCA.Common.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace NCA.Common.Infrastructure.Repositories
 {

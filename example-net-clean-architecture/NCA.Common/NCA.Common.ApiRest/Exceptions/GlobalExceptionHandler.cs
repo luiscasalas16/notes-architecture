@@ -1,8 +1,8 @@
-﻿using NCA.Common.Application.Exceptions;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using NCA.Common.Application.Exceptions;
 using NCA.Common.Application.Results;
 using NCA.Common.Domain.Models;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
 
 namespace NCA.Common.Api.Exceptions
 {

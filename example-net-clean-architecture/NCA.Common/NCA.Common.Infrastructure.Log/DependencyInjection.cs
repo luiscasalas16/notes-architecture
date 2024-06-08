@@ -1,5 +1,5 @@
-﻿using NCA.Common.Application.Infrastructure.Log;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NCA.Common.Application.Infrastructure.Log;
 
 namespace NCA.Common.Infrastructure.Log
 {

@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using NCA.Common.Domain.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Metadata;
+using NCA.Common.Domain.Models;
 
 namespace NCA.Common.Application.Results
 {

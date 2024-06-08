@@ -1,5 +1,5 @@
-﻿using NCA.Common.Application.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using NCA.Common.Application.Repositories;
 
 namespace NCA.Common.Infrastructure.Repositories
 {

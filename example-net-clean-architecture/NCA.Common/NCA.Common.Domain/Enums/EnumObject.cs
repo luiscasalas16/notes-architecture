@@ -125,7 +125,7 @@ namespace NCA.Common.Domain.Enums
             {
                 if (!dictionary.TryGetValue(name, out var result))
                     throw EnumObjectHelper.NameNotFoundException<TEnum, TValue>(name);
-                
+
                 return result;
             }
         }
@@ -213,7 +213,7 @@ namespace NCA.Common.Domain.Enums
 
             if (!_fromValue.Value.TryGetValue(value, out var result))
                 return defaultValue;
-            
+
             return result;
         }
 
