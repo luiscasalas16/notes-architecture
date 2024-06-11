@@ -19,8 +19,6 @@ namespace NCA.Common.Scheduler
 
             var builder = WebApplication.CreateBuilder(args);
 
-            //log
-            builder.AddCommonLogs();
             // versions
             builder.AddCommonVersions();
             // global exceptions handler

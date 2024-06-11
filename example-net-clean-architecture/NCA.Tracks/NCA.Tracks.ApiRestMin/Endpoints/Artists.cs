@@ -16,7 +16,7 @@ namespace NCA.Tracks.ApiRestMin.Endpoints
             group.Get(GetArtists);
             group.Post(CreateArtist);
             group.Put(UpdateArtist);
-            group.Delete("{id}", DeleteArtist, versions: [2]);
+            group.Delete("{id}", DeleteArtist);
         }
 
         public async Task<Result<List<GetArtists.Response>>> GetArtists(ISender sender, [AsParameters] GetArtists.Query query)
@@ -38,29 +38,5 @@ namespace NCA.Tracks.ApiRestMin.Endpoints
         {
             return await sender.Send(new DeleteArtist.Command() { ArtistId = id });
         }
-
-        //public Task<List<GetArtists.Response>> GetArtists(ISender sender, [AsParameters] GetArtists.Query query)
-        //{
-        //    return sender.Send(query);
-        //}
-
-        //public Task<int> CreateArtist(ISender sender, CreateArtist.Command command)
-        //{
-        //    return sender.Send(command);
-        //}
-
-        //public async Task<IResult> UpdateArtist(ISender sender, UpdateArtist.Command command)
-        //{
-        //    await sender.Send(command);
-
-        //    return Results.NoContent();
-        //}
-
-        //public async Task<IResult> DeleteArtist(ISender sender, int ArtistId)
-        //{
-        //    await sender.Send(new DeleteArtist.Command(ArtistId));
-
-        //    return Results.NoContent();
-        //}
     }
 }
